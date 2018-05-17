@@ -1,58 +1,70 @@
 const fs = require('fs');
 const path = require('path');
+const rootfolder = '..\\';
 
 exports.install = function() {
-	F.route('api/files', put, ['post']);
-	F.route('api/files', get);
-	F.file('*.*', serve);
+	F.route('/api/folders', getFolders, ['get', 'cors']);
+	F.route('/api/getfile', getFile, ['get', 'cors']);
+	F.route('/api/putfile', putFile, ['post', 'cors', 'raw']);
 };
 
-function getFile(name, cb) {
-    fs.readFile(name, 'utf8', cb);
+function readFile(name, cb) {
+	fs.readFile(name, 'utf8', cb);
 }
 
-function putFile(name, data, cb) {
-    fs.writeFile(name, data, 'utf8', cb);
+function writeFile(name, data, cb) {
+	fs.writeFile(name, data, 'utf8', cb);
 }
 
-function get() {
+function log(s) {
+	console.log(s);
+}
+
+function getFolders() {
 	var self = this;
-	getFile(self.req.query.name, function(err, data) {
-		if(err)
-			self.res.throw400(err);
-		else
-			self.res.send(data);
-	});
-}
+	var pathname = self.req.query.name;
 
-function put() {
-	var self = this;
-	putFile(self.req.name, self.req.body, function(err) {
-		if(err)
-			self.res.throw400(err);
-		else
-			self.res.send('');
-	});
-}
-
-function serve(req, res) {
-
-	var rootpath = '../client/dist/';
-	var filename = rootpath + req.path.join('/');
-	
-	fs.exists(filename, function (exist) {
-		if(!exist) {
-			res.content(404, `File ${filename} not found!`, 'text/plain');
-			return;
-		}
-	
-		fs.readFile(filename, function(err, data) {
-			if(err){
-				res.content(500, `Error getting the file: ${err}.`, 'text/plain');
-			} else {
-				res.content(200, data, U.getContentType(path.parse(filename).ext));
+	U.ls(rootfolder, 
+		function(files, folders) {
+			self.res.json({files: files.map(name => name.replace(rootfolder, '')), folders: folders});
+		},
+		function(filename, isDirectory) {
+			if(isDirectory) {
+				return (!filename.endsWith('.git') && filename.indexOf('node_modules') === -1);
 			}
-		});
+			return U.getName(filename).indexOf(pathname) !== -1;
+		}
+	);
+}
+
+function getFile() {
+	var self = this;
+	var filename = rootfolder + self.req.query.name;
+
+	log('GET: ' + filename);
+	
+	readFile(filename, function(err, data) {
+		if(err) {
+			self.res.throw400(err);
+			log(err.message);
+		}
+		else
+			self.res.json({data: data});
 	});
 }
 
+function putFile() {
+	var self = this;
+	var filename = rootfolder + self.req.query.name;
+	
+	log('PUT: ' + filename);
+
+	writeFile(filename, self.req.body, function(err) {
+		if(err) {
+			self.res.throw400(err);
+			log(err.message);
+		}
+		else
+			self.res.json({});
+	});
+}
