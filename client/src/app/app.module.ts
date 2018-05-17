@@ -1,4 +1,6 @@
 import {CdkTableModule} from '@angular/cdk/table';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import {
   MatAutocompleteModule,
   MatButtonModule,
@@ -34,9 +36,10 @@ import {
   MatTooltipModule,
 } from '@angular/material';
 
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   exports: [
@@ -73,19 +76,43 @@ import { NgModule } from '@angular/core';
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-  ]
+  ],
+  declarations: []
 })
 export class MaterialModule {}
 
 import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
+import { PlaygroundComponent } from './playground/playground.component';
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+
+const routes: Routes = [
+  { path: 'home', component: HomeComponent },
+  { path: 'playground', component: PlaygroundComponent },
+  { path: '',
+    redirectTo: '/playground',
+    pathMatch: 'full'
+  },
+  { path: '**', component: PagenotfoundComponent }
+];
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent, PlaygroundComponent, PagenotfoundComponent
   ],
   imports: [
+    RouterModule.forRoot(
+      routes,
+      // { enableTracing: true } // debugging purposes only
+    ),
     BrowserModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MaterialModule,
+    HttpClientModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

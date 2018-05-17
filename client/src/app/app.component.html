@@ -3,12 +3,19 @@
   <span>Total-angular</span>
 </mat-toolbar>
 
-<mat-card>
-  <mat-card-title>System</mat-card-title>
-  <mat-list>
-    <mat-list-item> Client </mat-list-item>
-    <mat-list-item> Server </mat-list-item>
-  </mat-list>
-</mat-card>
+<a mat-button href="http://localhost:8000/index.html" queryParamsHandling preserveFragment>
+  reload
+</a>
+
+<button mat-button [routerLink]="['/home']" queryParamsHandling preserveFragment>
+  home
+</button>
+
+<button mat-button [routerLink]="['/playground']" queryParamsHandling preserveFragment>
+  playground
+</button>
+
+<router-outlet></router-outlet>
+
 
 
