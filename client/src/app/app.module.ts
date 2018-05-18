@@ -1,6 +1,8 @@
 import {CdkTableModule} from '@angular/cdk/table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { MonacoEditorModule } from 'ngx-monaco-editor';
+
 import {
   MatAutocompleteModule,
   MatButtonModule,
@@ -104,9 +106,10 @@ const routes: Routes = [
     HomeComponent, PlaygroundComponent, PagenotfoundComponent
   ],
   imports: [
+    MonacoEditorModule.forRoot(),   // use forRoot() in main app module only.
     RouterModule.forRoot(
       routes,
-      // { enableTracing: true } // debugging purposes only
+      // { enableTracing: true }    // debugging purposes only
     ),
     BrowserModule,
     MaterialModule,
