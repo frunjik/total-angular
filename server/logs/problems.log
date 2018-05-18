@@ -1,0 +1,1 @@
+2018-05-18 16:51:52 | {"errno":-4058,"code":"ENOENT","syscall":"open","path":"C:\\Projects\\web\\total-angular\\README2.md"} url: http://127.0.0.1:8000/api/getfile?name=./README2.md source: response400() ip: 127.0.0.1

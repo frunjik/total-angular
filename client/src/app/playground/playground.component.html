@@ -13,10 +13,8 @@
       {{filename}}
     </mat-card-title>
     <mat-card-content>
-      <pre #box
-        contenteditable="true"
-        (blur)="setFileData(box.innerText)"
-        [textContent]="filedata">
-      </pre>
+      <ngx-monaco-editor [options]="editorOptions" [(ngModel)]="filedata"></ngx-monaco-editor>
     </mat-card-content>
 </mat-card>
+
+
