@@ -1,7 +1,22 @@
 
+<form class="example-form form-full-width">
+  <mat-form-field class="example-full-width">
+    <input class="input-field" name="filename" matInput placeholder="filename" [(ngModel)]="filename">
+  </mat-form-field>
+</form>
+
+<button (click)="getFile()" mat-button>Load</button>
+<button (click)="putFile()" mat-button>Save</button>
+
 <mat-card>
-  <mat-card-title>Playground</mat-card-title>
-  <p>
-    works!
-  </p>
+    <mat-card-title>
+      {{filename}}
+    </mat-card-title>
+    <mat-card-content>
+      <pre #box
+        contenteditable="true"
+        (blur)="setFileData(box.innerText)"
+        [textContent]="filedata">
+      </pre>
+    </mat-card-content>
 </mat-card>

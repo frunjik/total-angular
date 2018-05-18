@@ -1,5 +1,5 @@
 # total-angular
-Playground for playing with bootstrapping using angular and total.js
+Playground with angular and total.js
 
 - start server
 ```

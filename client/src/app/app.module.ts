@@ -81,6 +81,8 @@ import { HttpClientModule } from '@angular/common/http';
 })
 export class MaterialModule {}
 
+import { FsService } from './fs.service';
+
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { PlaygroundComponent } from './playground/playground.component';
@@ -114,7 +116,7 @@ const routes: Routes = [
     HttpClientModule
     
   ],
-  providers: [],
+  providers: [FsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
