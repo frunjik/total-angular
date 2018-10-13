@@ -99,7 +99,7 @@ const routes: Routes = [
   { path: 'editor', component: EditorComponent },
   { path: 'playground', component: PlaygroundComponent },
   { path: '',
-    redirectTo: '/edit',
+    redirectTo: '/home',
     pathMatch: 'full'
   },
   { path: '**', component: PagenotfoundComponent }
