@@ -1,0 +1,8 @@
+ngx-monaco-editor {
+    display: block;
+    height: 700px;
+}
+
+.input-field {
+    width: 80%;
+}
