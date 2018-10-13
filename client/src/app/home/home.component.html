@@ -1,7 +1,18 @@
 
+
 <mat-card>
   <mat-card-title>Home</mat-card-title>
-  <p>
-    works!
-  </p>
+    <button mat-button (click)="editor.openFile('/client/src/app/home/home.component.html');" queryParamsHandling preserveFragment>
+    /client/src/app/home/home.component.html
+    </button>
+    <button mat-button (click)="editor.openFile('/client/src/app/home/home.component.ts');" queryParamsHandling preserveFragment>
+    /client/src/app/home/home.component.ts
+    </button>
 </mat-card>
+
+<canvas id="scene" width="800" height="600">
+</canvas>
+
+<app-editor #editor filename="/client/src/app/home/home.component.html"></app-editor>
+
+

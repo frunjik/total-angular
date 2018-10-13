@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FsService } from '../fs.service';
 
 import { ActivatedRoute }     from '@angular/router';
-import { Observable }         from 'rxjs';
-import { map }                from 'rxjs/operators';
 
 @Component({
   selector: 'app-editor',
@@ -12,7 +10,6 @@ import { map }                from 'rxjs/operators';
 })
 export class EditorComponent implements OnInit {
 
-//   filename: string = './client/src/app/editor/editor.component.ts';
   filename: string = './client/src/app/app.component.html';
   filedata: string = '';
 
@@ -25,7 +22,10 @@ export class EditorComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      this.openFile(params['name'] || this.filename);
+      let filename = params['name'] || this.filename;
+      if (filename) {
+        this.openFile(filename);
+      }
     });
   }
 
@@ -57,9 +57,8 @@ export class EditorComponent implements OnInit {
     this.fs.putFile(this.filename, this.filedata)
       .subscribe(
         success => {
-            // reload
-            // window.location.reload();
-            window.location.assign("http://localhost:8000/index.html");
+            // reload ?
+            // window.location.assign("http://localhost:8000/index.html");
         },
         failure => {}
       );

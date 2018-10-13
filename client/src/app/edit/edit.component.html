@@ -1,18 +1,69 @@
 
 <mat-drawer-container class="example-container">
-  <mat-drawer mode="side" position="end" opened disableClose>
-    <mat-list>
-        <mat-list-item *ngFor="let filename of filenames">
-        <button mat-button (click)="editor.openFile(filename)">
-            {{filename}}
-        </button>
-        </mat-list-item>
-    </mat-list>
-  </mat-drawer>
-  <mat-drawer-content>
-    <app-editor #editor></app-editor>
-  </mat-drawer-content>
+    <mat-drawer mode="side" position="end" opened disableClose>
+
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+            <mat-panel-title>
+                User
+            </mat-panel-title>
+            <!-- mat-panel-description>
+                Edit user code
+            </mat-panel-description -->
+            </mat-expansion-panel-header>
+        
+            <mat-list>
+                <mat-list-item *ngFor="let filename of filenames">
+                <button mat-button (click)="editor.openFile(filename)">
+                    {{filename}}
+                </button>
+                </mat-list-item>
+            </mat-list>
+        </mat-expansion-panel>
+        
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+            <mat-panel-title>
+                System
+            </mat-panel-title>
+            <!-- mat-panel-description>
+                Edit system code
+            </mat-panel-description -->
+            </mat-expansion-panel-header>
+        
+            <mat-list>
+                <mat-list-item *ngFor="let filename of filenames">
+                <button mat-button (click)="editor.openFile(filename)">
+                    {{filename}}
+                </button>
+                </mat-list-item>
+            </mat-list>
+        </mat-expansion-panel>
+
+    </mat-drawer>
+    <mat-drawer-content>
+        <app-editor #editor></app-editor>
+    </mat-drawer-content>
 </mat-drawer-container>
+
+        
+
+
+
+
+<!--mat-expansion-panel (opened)="panelOpenState = true"
+                    (closed)="panelOpenState = false">
+<mat-expansion-panel-header>
+    <mat-panel-title>
+    Self aware panel
+    </mat-panel-title>
+    <mat-panel-description>
+    Currently I am {{panelOpenState ? 'open' : 'closed'}}
+    </mat-panel-description>
+</mat-expansion-panel-header>
+<p>I'm visible because I am open</p>
+</mat-expansion-panel -->
+
 
 
 
