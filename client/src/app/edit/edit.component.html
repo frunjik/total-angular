@@ -26,6 +26,16 @@
             </mat-panel-title>
             </mat-expansion-panel-header>
             <mat-list>
+                <mat-list-item>
+                    todo
+                    <button mat-icon-button [routerLink]="['/edit']" [queryParams]="{name: 'client/src/app/edit/edit.component.ts'}" queryParamsHandling preserveFragment>
+                        <mat-icon>view_quilt</mat-icon>
+                    </button>
+                    <button mat-icon-button [routerLink]="['/edit']" [queryParams]="{name: 'client/src/app/edit/edit.component.html'}" queryParamsHandling preserveFragment>
+                        <mat-icon>view_stream</mat-icon>
+                    </button>
+                </mat-list-item>
+
                 <mat-list-item *ngFor="let item of todo">
                     {{item}}
                 </mat-list-item>
@@ -39,3 +49,21 @@
         <app-editor #editor></app-editor>
     </mat-drawer-content>
 </mat-drawer-container>
+
+
+<mat-toolbar>
+<span></span>
+<span class="fill-remaining-space">
+</span>
+
+/edit
+<button mat-icon-button [routerLink]="['/edit']" [queryParams]="{name: 'client/src/app/edit/edit.component.ts'}" queryParamsHandling preserveFragment>
+<mat-icon>view_quilt</mat-icon>
+</button>
+<button mat-icon-button [routerLink]="['/edit']" [queryParams]="{name: 'client/src/app/edit/edit.component.html'}" queryParamsHandling preserveFragment>
+<mat-icon>view_stream</mat-icon>
+</button>
+<button mat-icon-button [routerLink]="['/edit']" [queryParams]="{name: 'client/src/app/edit/edit.component.css'}" queryParamsHandling preserveFragment>
+<mat-icon>view_module</mat-icon>
+</button>
+</mat-toolbar>
