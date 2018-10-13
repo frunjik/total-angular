@@ -1,18 +1,32 @@
+<div class="flexcontainer">
+
+    <div class="smallitem">
+    <canvas id="scene" width="320" height="200">
+    </canvas>
+
+    </div>
+    <div class="bigitem">
+
+        <button mat-button (click)="editor.openFile('/client/src/app/home/home.component.ts');" queryParamsHandling preserveFragment>
+        /client/src/app/home/home.component.ts
+        </button>
+
+        <button mat-button (click)="editor.openFile('/client/src/app/home/home.component.html');" queryParamsHandling preserveFragment>
+        /client/src/app/home/home.component.html
+        </button>
+
+        <button mat-button (click)="editor.openFile('/client/src/app/home/home.component.css');" queryParamsHandling preserveFragment>
+        /client/src/app/home/home.component.css
+        </button>
+
+        <app-editor #editor loadfile="client/src/app/home/home.component.html"></app-editor>
+    
+    </div>
+
+</div>
 
 
-<mat-card>
-  <mat-card-title>Home</mat-card-title>
-    <button mat-button (click)="editor.openFile('/client/src/app/home/home.component.html');" queryParamsHandling preserveFragment>
-    /client/src/app/home/home.component.html
-    </button>
-    <button mat-button (click)="editor.openFile('/client/src/app/home/home.component.ts');" queryParamsHandling preserveFragment>
-    /client/src/app/home/home.component.ts
-    </button>
-</mat-card>
 
-<canvas id="scene" width="800" height="600">
-</canvas>
 
-<app-editor #editor filename="/client/src/app/home/home.component.html"></app-editor>
 
 

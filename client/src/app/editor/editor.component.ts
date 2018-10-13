@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FsService } from '../fs.service';
 
 import { ActivatedRoute }     from '@angular/router';
@@ -12,6 +12,12 @@ export class EditorComponent implements OnInit {
 
   filename: string = './client/src/app/app.component.html';
   filedata: string = '';
+
+  // todo better name / scheme
+  @Input()
+  set loadfile(name: string) {
+    this.openFile(name);
+  }
 
   editorOptions = {theme: 'vs-dark', language: 'javascript'};
 
