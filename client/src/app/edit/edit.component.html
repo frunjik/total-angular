@@ -2,7 +2,9 @@
 <mat-drawer-container class="example-container">
     <mat-drawer mode="side" position="end" opened disableClose>
 
-        <mat-expansion-panel *ngFor="let panel of panels">
+        <mat-accordion>
+
+        <mat-expansion-panel *ngFor="let panel of panels" open>
             <mat-expansion-panel-header>
             <mat-panel-title>
                 {{panel.title}}
@@ -16,6 +18,21 @@
                 </mat-list-item>
             </mat-list>
         </mat-expansion-panel>
+
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+            <mat-panel-title>
+                todo
+            </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-list>
+                <mat-list-item *ngFor="let item of todo">
+                    {{item}}
+                </mat-list-item>
+            </mat-list>
+        </mat-expansion-panel>
+
+        </mat-accordion>
 
     </mat-drawer>
     <mat-drawer-content>

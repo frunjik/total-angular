@@ -8,7 +8,24 @@ import { Router } from '@angular/router';
 })
 export class EditComponent {
 
+  todo = [
+    'TODO items',
+    'flex layout',
+    'better navigation',
+    'remembering state',
+  ];
+
   panels = [
+      { 
+        title: 'current',
+        filenames: [
+            'client/src/app/edit/edit.component.ts',
+            'client/src/app/edit/edit.component.html',
+            'client/src/app/home/home.component.ts',
+            'client/src/app/home/home.component.html',
+            'client/src/app/home/home.component.css',
+        ]
+      },
       { 
         title: 'app',
         filenames: [
