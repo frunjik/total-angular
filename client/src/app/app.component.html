@@ -11,11 +11,22 @@
   home
 </button>
 
-<button mat-button [routerLink]="['/playground']" queryParamsHandling preserveFragment>
-  playground
-</button>
 
-<router-outlet></router-outlet>
+<mat-drawer-container class="example-container">
+  <mat-drawer mode="side" position="end" opened disableClose>
+    <mat-list>
+        <mat-list-item *ngFor="let link of links">
+        <button mat-button (click)="gotoLink(link)">
+        {{link}}
+        </button>
+        </mat-list-item>
+    </mat-list>
+  </mat-drawer>
+  <mat-drawer-content>
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>
+
 
 
 
