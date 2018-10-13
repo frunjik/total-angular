@@ -1,8 +1,26 @@
+<mat-expansion-panel>
+    <mat-expansion-panel-header>
+    <mat-panel-title>
+        Filename
+    </mat-panel-title>
+    <mat-panel-description>
+        {{filename}}
+
+    </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <form class="example-form form-full-width">
+    <mat-form-field class="input-field example-full-width">
+        <input class="input-field" name="filename" matInput placeholder="filename" [(ngModel)]="filename">
+    </mat-form-field>
+    </form>
+</mat-expansion-panel>
+
 <ngx-monaco-editor [options]="editorOptions" [(ngModel)]="filedata"></ngx-monaco-editor>
-<form class="example-form form-full-width">
-<mat-form-field class="input-field example-full-width">
-    <input class="input-field" name="filename" matInput placeholder="filename" [(ngModel)]="filename">
-</mat-form-field>
-</form>
-<button (click)="getFile()" mat-button>Load</button>
-<button (click)="putFile()" mat-button>Save</button>
+
+<mat-toolbar>
+    <button (click)="getFile()" mat-button>Load</button>
+    <button (click)="putFile()" mat-button>Save</button>
+    <button (click)="saveAndReload()" mat-button>Save & Reload</button>
+</mat-toolbar>
+

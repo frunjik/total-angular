@@ -53,20 +53,29 @@ export class EditorComponent implements OnInit {
       );
   }
 
-  putFile() {
+  putFile(reload) {
     this.fs.putFile(this.filename, this.filedata)
       .subscribe(
         success => {
-            // reload ?
-            // window.location.assign("http://localhost:8000/index.html");
+            if (reload) {
+                this.reload(500);
+            }
         },
         failure => {}
       );
   }
 
+  reload(timeout) {
+    setTimeout(() => {window.location.href = "http://localhost:8000/index.html";}, timeout);
+  }
+
   openFile(filename) {
     this.setFilename(filename);
     this.getFile();
+  }
+
+  saveAndReload() {
+    this.putFile(true);
   }
 
 }
