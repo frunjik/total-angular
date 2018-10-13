@@ -1,7 +1,7 @@
-import {CdkTableModule} from '@angular/cdk/table';
+import { CdkTableModule } from '@angular/cdk/table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { MonacoEditorModule } from 'ngx-monaco-editor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {
   MatAutocompleteModule,
@@ -78,6 +78,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
+    BrowserAnimationsModule,
   ],
   declarations: []
 })
@@ -87,14 +88,16 @@ import { FsService } from './fs.service';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
+import { EditorComponent } from './editor/editor.component';
 import { PlaygroundComponent } from './playground/playground.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
+  { path: 'edit', component: EditorComponent },
   { path: 'playground', component: PlaygroundComponent },
   { path: '',
-    redirectTo: '/playground',
+    redirectTo: '/edit',
     pathMatch: 'full'
   },
   { path: '**', component: PagenotfoundComponent }
@@ -103,7 +106,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent, PlaygroundComponent, PagenotfoundComponent
+    HomeComponent, EditorComponent, PlaygroundComponent, PagenotfoundComponent
   ],
   imports: [
     MonacoEditorModule.forRoot(),   // use forRoot() in main app module only.
@@ -115,9 +118,8 @@ const routes: Routes = [
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     MaterialModule,
-    HttpClientModule
-    
   ],
   providers: [FsService],
   bootstrap: [AppComponent]
