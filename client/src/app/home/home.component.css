@@ -1,0 +1,14 @@
+.bigitem {
+   /* This will be twice as */
+   /* big as the small item. */
+   flex: 2 0 0;
+}
+.smallitem {
+   flex: 1 0 0;
+}
+
+.flexcontainer {
+   display: flex;
+   flex-direction: row;
+   align-items: flex-start;
+}
