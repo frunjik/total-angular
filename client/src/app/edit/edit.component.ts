@@ -9,10 +9,17 @@ import { Router } from '@angular/router';
 export class EditComponent {
 
   todo = [
-    'TODO items',
+    'TODO items better place',
     'flex layout',
     'better navigation',
     'remembering state',
+    'console',
+    'cmd new component',
+    'cmd new file',
+    'cmd new folder',
+    'folder/ file searching',
+    '-------------------',
+    'DONE *editor.filename*',
   ];
 
   panels = [
