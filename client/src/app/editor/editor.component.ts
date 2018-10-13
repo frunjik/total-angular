@@ -25,8 +25,7 @@ export class EditorComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      this.filename = params['name'] || this.filename;
-      this.getFile();
+      this.openFile(params['name'] || this.filename);
     });
   }
 
@@ -66,7 +65,7 @@ export class EditorComponent implements OnInit {
       );
   }
 
-  selectFile(filename) {
+  openFile(filename) {
     this.setFilename(filename);
     this.getFile();
   }

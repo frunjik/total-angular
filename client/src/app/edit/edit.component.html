@@ -1,0 +1,18 @@
+
+<mat-drawer-container class="example-container">
+  <mat-drawer mode="side" position="end" opened disableClose>
+    <mat-list>
+        <mat-list-item *ngFor="let filename of filenames">
+        <button mat-button (click)="editor.openFile(filename)">
+            {{filename}}
+        </button>
+        </mat-list-item>
+    </mat-list>
+  </mat-drawer>
+  <mat-drawer-content>
+    <app-editor #editor></app-editor>
+  </mat-drawer-content>
+</mat-drawer-container>
+
+
+

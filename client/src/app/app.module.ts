@@ -88,13 +88,15 @@ import { FsService } from './fs.service';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
+import { EditComponent } from './edit/edit.component';
 import { EditorComponent } from './editor/editor.component';
 import { PlaygroundComponent } from './playground/playground.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: 'edit', component: EditorComponent },
+  { path: 'edit', component: EditComponent },
+  { path: 'editor', component: EditorComponent },
   { path: 'playground', component: PlaygroundComponent },
   { path: '',
     redirectTo: '/edit',
@@ -106,7 +108,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent, EditorComponent, PlaygroundComponent, PagenotfoundComponent
+    HomeComponent, EditComponent, EditorComponent, PlaygroundComponent, PagenotfoundComponent
   ],
   imports: [
     MonacoEditorModule.forRoot(),   // use forRoot() in main app module only.
