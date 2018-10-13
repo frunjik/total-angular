@@ -8,23 +8,35 @@
     </div>
     <div class="bigitem">
 
-        <button mat-button (click)="editor.openFile('client/src/app/home/home.component.ts');">
-        client/src/app/home/home.component.ts
-        </button>
+        <app-editor #editor loadfile="client/src/app/home/home.component.ts"></app-editor>
+        <app-editor #editor2 loadfile="client/src/app/home/home.component.html"></app-editor>
 
-        <button mat-button (click)="editor.openFile('client/src/app/home/home.component.html');">
-        client/src/app/home/home.component.html
-        </button>
-
-        <button mat-button (click)="editor.openFile('client/src/app/home/home.component.css');">
-        client/src/app/home/home.component.css
-        </button>
-
-        <app-editor #editor loadfile="client/src/app/home/home.component.html"></app-editor>
-    
     </div>
 
 </div>
+
+<mat-toolbar class="small-toolbar">
+    <span class="fill-remaining-space"></span>
+
+    <span>
+    ::home 
+    <button mat-icon-button (click)="editor.openFile('client/src/app/home/home.component.ts');">
+        <mat-icon>view_quilt</mat-icon>
+    </button>
+
+    <button mat-icon-button (click)="editor.openFile('client/src/app/home/home.component.html');">
+        <mat-icon>view_stream</mat-icon>
+    </button>
+
+    <button mat-icon-button (click)="editor.openFile('client/src/app/home/home.component.css');">
+        <mat-icon>view_module</mat-icon>
+    </button>
+
+    </span>
+
+</mat-toolbar>
+
+
 
 
 

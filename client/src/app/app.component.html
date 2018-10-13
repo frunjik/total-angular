@@ -1,11 +1,42 @@
-<mat-toolbar color="warn">
-  <span>Workbench #001</span>
+<mat-toolbar no-color="warn">
+  <span>{{title}}</span>
 
-  <!-- This fills the remaining space of the current row -->
-  <span class="example-fill-remaining-space"></span>
+  <span class="fill-remaining-space"></span>
 
   <span>
-    /app
+    <a mat-icon-button href="http://localhost:8000/index.html" queryParamsHandling preserveFragment>
+    <mat-icon>cached</mat-icon>
+    </a>
+
+  </span>
+
+</mat-toolbar>
+
+<mat-toolbar>
+  <span></span>
+
+  <span>
+    <button mat-button [routerLink]="['/home']" queryParamsHandling preserveFragment>
+    home
+    </button>
+
+    <button mat-button [routerLink]="['/edit']" queryParamsHandling preserveFragment>
+    work
+    </button>
+  </span>
+
+</mat-toolbar>
+
+
+<router-outlet></router-outlet>
+
+<mat-toolbar class="small-toolbar">
+  <span></span>
+
+  <span class="fill-remaining-space"></span>
+
+  <span>
+    ::app
     <button mat-icon-button [routerLink]="['/edit']" [queryParams]="{name: 'client/src/app/app.component.ts'}" queryParamsHandling preserveFragment>
     <mat-icon>view_quilt</mat-icon>
     </button>
@@ -15,20 +46,8 @@
     <button mat-icon-button [routerLink]="['/edit']" [queryParams]="{name: 'client/src/app/app.component.css'}" queryParamsHandling preserveFragment>
     <mat-icon>view_module</mat-icon>
     </button>
-    <a mat-icon-button href="http://localhost:8000/index.html" queryParamsHandling preserveFragment>
-    <mat-icon>cached</mat-icon>
-    </a>
-
   </span>
 
 </mat-toolbar>
 
-<button mat-button [routerLink]="['/home']" queryParamsHandling preserveFragment>
-  home
-</button>
 
-<button mat-button [routerLink]="['/edit']" queryParamsHandling preserveFragment>
-  work
-</button>
-
-<router-outlet></router-outlet>

@@ -51,12 +51,13 @@
 </mat-drawer-container>
 
 
-<mat-toolbar>
+<mat-toolbar class="small-toolbar">
 <span></span>
 <span class="fill-remaining-space">
 </span>
 
-/edit
+<span>
+::edit
 <button mat-icon-button [routerLink]="['/edit']" [queryParams]="{name: 'client/src/app/edit/edit.component.ts'}" queryParamsHandling preserveFragment>
 <mat-icon>view_quilt</mat-icon>
 </button>
@@ -66,4 +67,5 @@
 <button mat-icon-button [routerLink]="['/edit']" [queryParams]="{name: 'client/src/app/edit/edit.component.css'}" queryParamsHandling preserveFragment>
 <mat-icon>view_module</mat-icon>
 </button>
+</span>
 </mat-toolbar>

@@ -1,6 +1,13 @@
 ngx-monaco-editor {
     display: block;
-    height: 700px;
+    height: 400px;
+}
+
+.me-fullscreen {
+    position:absolute; left:0; top:0;
+    width:100%; height:100%; max-height:100% !important;
+    margin:0; padding:0;
+    overflow:hidden;
 }
 
 .input-field {
@@ -11,4 +18,8 @@ ngx-monaco-editor {
   /* This fills the remaining space, by using flexbox. 
      Every toolbar row uses a flexbox row layout. */
   flex: 1 1 auto;
+}
+
+.small-toolbar {
+    height: 30px;
 }
