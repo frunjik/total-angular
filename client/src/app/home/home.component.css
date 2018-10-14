@@ -1,10 +1,10 @@
 .bigitem {
-   /* This will be twice as */
-   /* big as the small item. */
-   flex: 2 0 0;
+   /* small : big */
+   /* 2     : 3   */
+   flex: 3 0 0;
 }
 .smallitem {
-   flex: 1 0 0;
+   flex: 2 0 0;
 }
 
 .flexcontainer {
@@ -18,7 +18,12 @@
      Every toolbar row uses a flexbox row layout. */
   flex: 1 1 auto;
 }
+.fill-remaining-space-1 {
+  /* This fills the remaining space, by using flexbox. 
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 auto;
+}
 
 .small-toolbar {
-    height: 30px;
+    height: 35px;
 }
