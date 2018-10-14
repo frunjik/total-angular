@@ -93,9 +93,15 @@ import { EditorComponent } from './editor/editor.component';
 import { PlaygroundComponent } from './playground/playground.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 
+import { EditGuard } from './edit-guard';
+
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
-  { path: 'edit', component: EditComponent },
+  { path: 'home', component: HomeComponent,
+    canDeactivate: [EditGuard]
+  },
+  { path: 'edit', component: EditComponent,
+    canDeactivate: [EditGuard]
+  },
   { path: 'editor', component: EditorComponent },
   { path: 'playground', component: PlaygroundComponent },
   { path: '',
@@ -123,7 +129,7 @@ const routes: Routes = [
     HttpClientModule,
     MaterialModule,
   ],
-  providers: [FsService],
+  providers: [FsService, EditGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
