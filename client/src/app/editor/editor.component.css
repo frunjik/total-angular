@@ -1,6 +1,6 @@
 ngx-monaco-editor {
     display: block;
-    height: 500px;
+    height: 640px;
 }
 
 .me-fullscreen {
@@ -21,5 +21,5 @@ ngx-monaco-editor {
 }
 
 .small-toolbar {
-    height: 30px;
+    height: 35px;
 }
