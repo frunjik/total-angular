@@ -1,4 +1,5 @@
 "use strict";
+/*
 function create() {
 }
 function resize() {
@@ -23,3 +24,4 @@ game.on('update', update);
 game.on('render', render);
 game.stop();
 game.destroy();
+*/
