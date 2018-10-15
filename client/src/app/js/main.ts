@@ -3,7 +3,7 @@
 import { render, renderObject, createProgram, createShader } from './wgl';
 import { woodpusher } from './woodpusher';
 
-const drawables = [];
+let drawables = [];
 
 function createRedTriangle(gl) {
     const faTriangles = new Float32Array([
@@ -65,15 +65,8 @@ function init(gl) {
 }
 
 export function start(gl) {
-    // let canvas = document.querySelector("#scene") as HTMLCanvasElement;
-    // // let canvas: HTMLCanvasElement = document.getElementById("#scene") as HTMLCanvasElement;
-    // //@ts-ignore: getContext does not exist on type Element
-    // let gl = canvas.getContext("webgl2");
-    // if (!gl) {
-    //   gl = canvas.getContext("webgl");
-    // }
     if (!gl) {
-        console.log('No webGL');
+        console.log('start: No webGL');
         return;
     }
 
@@ -85,7 +78,7 @@ export function start(gl) {
 
 export function stop(gl) {
     if (!gl) {
-        console.log('No webGL');
+        console.log('stop: No webGL');
         return;
     }
 
