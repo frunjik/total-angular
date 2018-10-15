@@ -12,3 +12,6 @@ node debug.js
 cd client
 ng build --watch
 ```
+
+### status
+Highly experimental and unsecure.
