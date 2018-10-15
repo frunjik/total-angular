@@ -1,5 +1,6 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { start, stop } from '../js/main';
+import { run } from '../js/unittest_tests';
 
 @Component({
   selector: 'app-home',
@@ -9,6 +10,7 @@ import { start, stop } from '../js/main';
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private context;
+  private testResult;
 
   /** Template reference to the canvas element */
   @ViewChild('scene') canvasElement: ElementRef;
@@ -16,6 +18,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor() { }
 
   ngOnInit() {
+    this.runTests();
   }
 
   ngAfterViewInit() {
@@ -26,5 +29,14 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     stop(this.context);
     this.context = undefined;
+  }
+
+  runTests() {
+      const results = [
+          run(),
+      ];
+
+      this.testResult = results.map(r => r.summary()).join('\n');
+      this.testFailures = results.map(r => r.failures.join('\n')).join('\n');
   }
 }
