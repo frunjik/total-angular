@@ -64,7 +64,7 @@ export class EditorComponent implements OnInit {
       .subscribe(
         success => {
             if (reload) {
-                this.reload(500);
+                this.reload(800);
             }
         },
         failure => {}

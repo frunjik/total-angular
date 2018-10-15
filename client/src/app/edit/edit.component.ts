@@ -13,6 +13,7 @@ export class EditComponent {
     'remembering state',
     'console',
     'set editor height',
+    'make editor resizeable',
     'cmd new component',
     'cmd new file',
     'cmd new folder',
