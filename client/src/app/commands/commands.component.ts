@@ -35,6 +35,7 @@ export class CommandsComponent implements OnInit {
   }
 
   execute(cmd) {
+      if (!cmd) return;
       this.commandService.execute(cmd)
         .subscribe(response => {
           if (response.result) {
