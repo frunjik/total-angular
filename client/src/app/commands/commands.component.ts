@@ -9,7 +9,11 @@ import { CommandService } from '../command.service';
 export class CommandsComponent implements OnInit {
 
   cmd = '';
-  result = '';
+  result = {
+    stderr: '',
+    stdout: '',
+    error:  '',
+  }
   
   constructor(
       private commandService: CommandService
@@ -23,7 +27,10 @@ export class CommandsComponent implements OnInit {
     this.cmd = 'git commit -a -m "commited from Workbench"';
   }
 
-  run() {
+  run(cmd = null) {
+    if (cmd) {
+      this.cmd = cmd;      
+    }
     this.execute(this.cmd);
   }
 
@@ -31,10 +38,14 @@ export class CommandsComponent implements OnInit {
       this.commandService.execute(cmd)
         .subscribe(response => {
           if (response.result) {
-            this.result = response.result.stdout;
+            this.result = response.result;
           }
           else {
-            this.result = response.error;
+            this.result = {
+                stdout: '',
+                stderr: '',
+                error: response.error
+            };
           }
         });
   }
