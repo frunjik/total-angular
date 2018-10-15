@@ -11,6 +11,7 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FsService } from './fs.service';
+import { CommandService } from './command.service';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { EditComponent } from './edit/edit.component';
@@ -22,10 +23,11 @@ import { CommandsComponent } from './commands/commands.component';
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'edit', component: EditComponent },
+  { path: 'commands', component: CommandsComponent },
   { path: 'editor', component: EditorComponent },
   { path: 'playground', component: PlaygroundComponent },
   { path: '',
-    redirectTo: '/home',
+    redirectTo: 'commands',
     pathMatch: 'full'
   },
   { path: '**', component: PagenotfoundComponent }
@@ -54,7 +56,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [FsService],
+  providers: [FsService, CommandService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

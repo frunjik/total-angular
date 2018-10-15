@@ -20,6 +20,10 @@
     home
     </button>
 
+    <button mat-button [routerLink]="['/commands']" queryParamsHandling preserveFragment>
+    commands
+    </button>
+
     <button mat-button [routerLink]="['/edit']" queryParamsHandling preserveFragment>
     work
     </button>
@@ -27,8 +31,9 @@
 
 </mat-toolbar>
 
-
+<div class="content">
 <router-outlet></router-outlet>
+</div>
 
 <mat-toolbar class="small-toolbar">
   <span></span>

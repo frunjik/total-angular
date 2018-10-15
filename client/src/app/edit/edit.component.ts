@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 export class EditComponent {
 
   todo = [
+    'make commands nested',
+    'make commands global',
     'todo items better place',
     'remembering state',
     'console',
@@ -47,6 +49,14 @@ export class EditComponent {
         ]
       },
       { 
+        title: 'commands',
+        filenames: [
+            'client/src/app/commands/commands.component.ts',
+            'client/src/app/commands/commands.component.html',
+            'client/src/app/commands/commands.component.css',
+        ]
+      },
+      { 
         title: 'edit',
         filenames: [
             'client/src/app/edit/edit.component.ts',
@@ -55,6 +65,13 @@ export class EditComponent {
             'client/src/app/editor/editor.component.ts',
             'client/src/app/editor/editor.component.html',
             'client/src/app/editor/editor.component.css',
+        ]
+      },
+      { 
+        title: 'services',
+        filenames: [
+            'client/src/app/fs.service.ts',
+            'client/src/app/command.service.ts',
         ]
       },
       { 
@@ -86,6 +103,7 @@ export class EditComponent {
         filenames: [
             './README.md',
             'server/controllers/files.js',
+            'server/controllers/commands.js',
         ]
       },
   ];
