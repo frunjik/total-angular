@@ -1,43 +1,35 @@
 <mat-expansion-panel>
     <mat-expansion-panel-header>
-    <mat-panel-title>
-        Filename
-    </mat-panel-title>
-    <mat-panel-description>
-        {{filename}}
-
-    </mat-panel-description>
+        <mat-panel-title>Filename</mat-panel-title>
+        <mat-panel-description>{{filename}}</mat-panel-description>
     </mat-expansion-panel-header>
 
     <form class="example-form form-full-width">
-    <mat-form-field class="input-field example-full-width">
-        <input class="input-field" name="filename" matInput placeholder="filename" [(ngModel)]="filename">
-    </mat-form-field>
+        <mat-form-field class="input-field example-full-width">
+            <input class="input-field" name="filename" matInput placeholder="filename" [(ngModel)]="filename">
+        </mat-form-field>
     </form>
 </mat-expansion-panel>
 
 <ngx-monaco-editor [options]="editorOptions" [(ngModel)]="filedata"></ngx-monaco-editor>
 
 <mat-toolbar class="small-toolbar">
-    <button (click)="getFile()" mat-button>Load</button>
-    <button (click)="putFile()" mat-button>Save</button>
-    <button (click)="saveAndReload()" mat-button>Save & Reload</button>
+    <button (click)="getFile()" mat-button>load</button>
+    <button (click)="putFile()" mat-button>save</button>
+    <button (click)="saveAndReload()" mat-button>save & reload</button>
 
     <span class="fill-remaining-space"></span>
 
     <span>
-    ::editor 
-    <button mat-icon-button [routerLink]="['/edit']" [queryParams]="{name: 'client/src/app/editor/editor.component.ts'}" queryParamsHandling preserveFragment>
-    <mat-icon>view_quilt</mat-icon>
-    </button>
-    <button mat-icon-button [routerLink]="['/edit']" [queryParams]="{name: 'client/src/app/editor/editor.component.html'}" queryParamsHandling preserveFragment>
-    <mat-icon>view_stream</mat-icon>
-    </button>
-    <button mat-icon-button [routerLink]="['/edit']" [queryParams]="{name: 'client/src/app/editor/editor.component.css'}" queryParamsHandling preserveFragment>
-    <mat-icon>view_module</mat-icon>
-    </button>
+        ::editor 
+        <button mat-icon-button [routerLink]="['/edit']" [queryParams]="{name: 'client/src/app/editor/editor.component.ts'}" queryParamsHandling preserveFragment>
+        <mat-icon>view_quilt</mat-icon>
+        </button>
+        <button mat-icon-button [routerLink]="['/edit']" [queryParams]="{name: 'client/src/app/editor/editor.component.html'}" queryParamsHandling preserveFragment>
+        <mat-icon>view_stream</mat-icon>
+        </button>
+        <button mat-icon-button [routerLink]="['/edit']" [queryParams]="{name: 'client/src/app/editor/editor.component.css'}" queryParamsHandling preserveFragment>
+        <mat-icon>view_module</mat-icon>
+        </button>
     </span>
-
-
 </mat-toolbar>
-
