@@ -9,17 +9,17 @@ import { Router } from '@angular/router';
 export class EditComponent {
 
   todo = [
-    'make commands nested',
-    'make commands global',
+    'make side menu nested',
+    'make side menu global',
     'todo items better place',
     'remembering state',
-    'console',
     'set editor height',
     'cmd new component',
     'cmd new file',
     'cmd new folder',
     'folder/ file searching',
     '-------------------',
+    'DONE console (commands)',
     'DONE better file navigation',
     'DONE flex layout',
     'DONE better navigation',
@@ -30,6 +30,9 @@ export class EditComponent {
       { 
         title: 'current',
         filenames: [
+            'client/src/assets/prompt.svg',
+            'client/src/assets/bluerect.svg',
+            'client/src/assets/example.svg',
             'client/src/app/edit/edit.component.ts',
             'client/src/app/edit/edit.component.html',
             'client/src/app/home/home.component.ts',
