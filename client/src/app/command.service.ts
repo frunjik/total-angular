@@ -9,6 +9,6 @@ export class CommandService {
   ) { }
 
   execute(cmd) {
-    return this.http.get<string>('http://127.0.0.1:8000/api/command?cmd=' + cmd);
+    return this.http.get<any>('http://127.0.0.1:8000/api/command?cmd=' + cmd);
   }
 }
