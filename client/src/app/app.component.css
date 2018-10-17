@@ -7,3 +7,20 @@
 .small-toolbar {
     height: 30px;
 }
+
+
+
+
+.path {
+  stroke-dasharray: 32 3 2 3;
+  animation: dash 5s linear;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+}
+
+@keyframes dash {
+  20%, 100% {
+    stroke-dashoffset: -40;
+  }
+}
+

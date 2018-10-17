@@ -1,8 +1,13 @@
+
 <mat-toolbar no-color="warn">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="14" height="24">
+<path class="path" fill="none" stroke="darkgray" stroke-width="2" stroke-miterlimit="0" 
+d="M 2 2 L 7 12 L 2 22"
+/>    
+</svg>
   <span>{{title}}</span>
 
   <span class="fill-remaining-space"></span>
-
   <span>
     <a mat-icon-button href="http://localhost:8000/index.html" queryParamsHandling preserveFragment>
     <mat-icon>cached</mat-icon>
@@ -13,22 +18,23 @@
 </mat-toolbar>
 
 <mat-toolbar>
-  <span></span>
+    <span>
+        <button mat-button [routerLink]="['/home']" queryParamsHandling preserveFragment>
+        home
+        </button>
 
-  <span>
-    <button mat-button [routerLink]="['/home']" queryParamsHandling preserveFragment>
-    home
-    </button>
+        <button mat-button [routerLink]="['/commands']" queryParamsHandling preserveFragment>
+        commands
+        </button>
+    </span>
 
-    <button mat-button [routerLink]="['/commands']" queryParamsHandling preserveFragment>
-    commands
-    </button>
+    <!-- span class="fill-remaining-space"></span -->
 
-    <button mat-button [routerLink]="['/edit']" queryParamsHandling preserveFragment>
-    work
-    </button>
-  </span>
-
+    <span>
+        <button mat-button [routerLink]="['/edit']" queryParamsHandling preserveFragment>
+        edit
+        </button>
+    </span>
 </mat-toolbar>
 
 <div class="content">
@@ -37,9 +43,7 @@
 
 <mat-toolbar class="small-toolbar">
   <span></span>
-
   <span class="fill-remaining-space"></span>
-
   <span>
     ::app
     <button mat-icon-button [routerLink]="['/edit']" [queryParams]="{name: 'client/src/app/app.component.ts'}" queryParamsHandling preserveFragment>
