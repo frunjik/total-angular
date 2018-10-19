@@ -3,6 +3,7 @@
    /* big as the small item. */
    flex: 2 0 0;
 }
+
 .smallitem {
    flex: 1 0 0;
 }

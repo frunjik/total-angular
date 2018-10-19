@@ -1,0 +1,19 @@
+<mat-card>
+    <mat-card-title>
+    CANVAS2D
+    </mat-card-title>
+    <mat-card-content>
+        <canvas #canvas width="320" height="200"
+            (mouseenter)="onEvent($event)"
+            (mouseleave)="onEvent($event)"
+            (mousemove)="coordinates($event)"
+            on-click="onEvent($event)"
+            on-dblclick="onEvent($event)"
+            on-contextmenu="onEvent($event)"
+            oncontextmenu="return false;"
+        >
+        </canvas>
+    </mat-card-content>
+    <mat-card-footer>
+    </mat-card-footer>
+</mat-card>

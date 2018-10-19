@@ -18,6 +18,7 @@ export class EditComponent {
     'cmd new file',
     'cmd new folder',
     'folder/ file searching',
+    'authentication',
     '-------------------',
     'DONE console (commands)',
     'DONE better file navigation',
@@ -57,6 +58,14 @@ export class EditComponent {
             'client/src/app/home/home.component.ts',
             'client/src/app/home/home.component.html',
             'client/src/app/home/home.component.css',
+        ]
+      },
+      { 
+        title: 'canvas',
+        filenames: [
+            'client/src/app/components/canvas/canvas.component.ts',
+            'client/src/app/components/canvas/canvas.component.html',
+            'client/src/app/components/canvas/canvas.component.css',
         ]
       },
       { 

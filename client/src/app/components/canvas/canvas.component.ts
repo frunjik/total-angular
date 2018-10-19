@@ -1,10 +1,10 @@
 import { Component, ViewChild, ElementRef, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-canvas',
+  templateUrl: './canvas.component.html',
+  styleUrls: ['./canvas.component.css']
 })
-export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CanvasComponent implements OnInit, AfterViewInit, OnDestroy {
   private raf;
   private context;
 
@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   };
 
   /** Template reference to the canvas element */
-  @ViewChild('scene') canvasElement: ElementRef;
+  @ViewChild('canvas') canvasElement: ElementRef;
 
   constructor() { }
 
@@ -32,28 +32,15 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     let w = 20, h = 20;
     let x = 10, y = 10;
     this.drawGrid(ctx, x, y, cols, rows, w, h, 'lightgray');
-
-    // let centerX = 110, centerY = 110;
-    // this.drawDot(ctx, centerX, centerY);
-
-    this.drawDot(ctx, this.gridPoint.x, this.gridPoint.y, 5);
-
-    this.drawPoints(ctx, 'black');
-
-    this.paths.forEach(path => {
-        ctx.beginPath();
-        this.drawPath(ctx, path);
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = 'black';
-        ctx.stroke();
-    });
+    this.drawDot(ctx, this.gridPoint.x, this.gridPoint.y);
   }
 
-  drawDot(ctx, centerX, centerY, radius = 5) {
-    this.drawCircle(ctx, centerX, centerY, radius);
+  drawDot(ctx, centerX, centerY, r = 7) {
+    let radius = r;
+    this.drawCircle(ctx, centerX, centerY, radius, 'green', 'black', 2);
   }
 
-  drawCircle(ctx, centerX, centerY, radius, color = 'green', borderColor= 'black', lw = 1) {
+  drawCircle(ctx, centerX, centerY, radius, color, borderColor, lw = 1) {
     ctx.beginPath();
     ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
     ctx.fillStyle = color;
@@ -78,30 +65,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     ctx.stroke();
   }
 
-  drawPoints(ctx, color, lw = 2) {
-    if (this.points.length < 1) { return; }
-    ctx.beginPath();
-    this.drawPath(ctx, this.points);
-    ctx.lineTo(this.gridPoint.x, this.gridPoint.y);
-    ctx.lineWidth = lw;
-    ctx.strokeStyle = color || 'black';
-    ctx.stroke();
-    for(let i=0; i<this.points.length; i++) {
-        const p = this.points[i];
-        this.drawCircle(ctx, p.x, p.y, 4, 'blue');
-    }
-  }
-
-  drawPath(ctx, path, color, lw = 2) {
-    if (!path || path.length < 1) { return; }
-    const p = path[0];
-    ctx.moveTo(p.x, p.y);
-    for(let i=1; i<path.length; i++) {
-        const p = path[i];
-        ctx.lineTo(p.x, p.y);
-    }
-  }
-
   update(now) {
   }
   
@@ -113,32 +76,17 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   clicked() {
-  }
-
-  addPoint() {
     this.points.push(this.clampPoint(this.mx, this.my));
-  }
-
-  clearPoints() {
-    this.points = [];
-  }
-
-  addPath() {
-    this.paths.push(this.points);
-    this.clearPoints();
   }
 
   onEvent(event: MouseEvent): void {
     this.event = event;
     if ('click' === event.type) {
-        // this.clicked();
+        this.clicked();
     }
     else if ('dblclick' === event.type) {
-        // this.clearPoints();
-        this.addPoint();
     }
     else if ('contextmenu' === event.type) {
-        this.addPath();
     }
   }
 
@@ -185,5 +133,4 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.bounds = undefined;
     this.canvas = undefined;
   }
-
 }
