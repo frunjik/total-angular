@@ -41,6 +41,14 @@ export class EditComponent {
         ]
       },
       { 
+        title: 'edit-links',
+        filenames: [
+            'client/src/app/components/edit-links/edit-links.component.ts',
+            'client/src/app/components/edit-links/edit-links.component.html',
+            'client/src/app/components/edit-links/edit-links.component.css',
+        ]
+      },
+      { 
         title: 'app',
         filenames: [
             'client/src/app/app.component.ts',

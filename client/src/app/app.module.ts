@@ -19,6 +19,7 @@ import { EditorComponent } from './editor/editor.component';
 import { PlaygroundComponent } from './playground/playground.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { CommandsComponent } from './commands/commands.component';
+import { EditLinksComponent } from './components/edit-links/edit-links.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -27,7 +28,7 @@ const routes: Routes = [
   { path: 'editor', component: EditorComponent },
   { path: 'playground', component: PlaygroundComponent },
   { path: '',
-    redirectTo: 'commands',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   { path: '**', component: PagenotfoundComponent }
@@ -42,6 +43,7 @@ const routes: Routes = [
     CommandsComponent,
     PlaygroundComponent, 
     PagenotfoundComponent,
+    EditLinksComponent
   ],
   imports: [
     MonacoEditorModule.forRoot(),   // use forRoot() in main app module only.

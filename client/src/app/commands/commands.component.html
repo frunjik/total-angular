@@ -24,23 +24,3 @@
     <button mat-button (click)="cmd = 'ng generate service services/'">ng generate service</button>
   </mat-card-actions>
 </mat-card>
-
-<mat-toolbar class="small-toolbar">
-  <span></span>
-
-  <span class="fill-remaining-space"></span>
-
-  <span>
-    ::cmd
-    <button mat-icon-button [routerLink]="['/edit']" [queryParams]="{name: 'client/src/app/commands/commands.component.ts'}" queryParamsHandling preserveFragment>
-    <mat-icon>view_quilt</mat-icon>
-    </button>
-    <button mat-icon-button [routerLink]="['/edit']" [queryParams]="{name: 'client/src/app/commands/commands.component.html'}" queryParamsHandling preserveFragment>
-    <mat-icon>view_stream</mat-icon>
-    </button>
-    <button mat-icon-button [routerLink]="['/edit']" [queryParams]="{name: 'client/src/app/commands/commands.component.css'}" queryParamsHandling preserveFragment>
-    <mat-icon>view_module</mat-icon>
-    </button>
-  </span>
-
-</mat-toolbar>

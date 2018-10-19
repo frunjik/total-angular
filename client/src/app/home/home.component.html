@@ -2,39 +2,24 @@
 
     <div class="smallitem">
 
-    <canvas id="scene" width="640" height="400">
-    </canvas>
+    <mat-card>
+        <mat-card-title>
+        SUBJECT
+        </mat-card-title>
+        <mat-card-content>
+            <canvas id="scene" width="640" height="400">
+            </canvas>
+        </mat-card-content>
+        <mat-card-footer>
+        </mat-card-footer>
+    </mat-card>
 
     </div>
     <div class="bigitem">
-
         <app-editor #editor loadfile="client/src/app/home/home.component.ts"></app-editor>
-        <app-editor #editor2 loadfile="client/src/app/home/home.component.html"></app-editor>
-
     </div>
 
 </div>
-
-<mat-toolbar class="small-toolbar">
-    <span class="fill-remaining-space"></span>
-
-    <span>
-    ::home 
-    <button mat-icon-button (click)="editor.openFile('client/src/app/home/home.component.ts');">
-        <mat-icon>view_quilt</mat-icon>
-    </button>
-
-    <button mat-icon-button (click)="editor.openFile('client/src/app/home/home.component.html');">
-        <mat-icon>view_stream</mat-icon>
-    </button>
-
-    <button mat-icon-button (click)="editor.openFile('client/src/app/home/home.component.css');">
-        <mat-icon>view_module</mat-icon>
-    </button>
-
-    </span>
-
-</mat-toolbar>
 
 
 

@@ -10,7 +10,8 @@ import { ActivatedRoute }     from '@angular/router';
 })
 export class EditorComponent implements OnInit {
 
-  filename: string = './client/src/app/app.component.html';
+//   filename: string = './client/src/app/app.component.html';
+  filename: string = './client/src/app/components/edit-links/edit-links.component.ts';
   filedata: string = '';
 
   // todo better name / scheme
