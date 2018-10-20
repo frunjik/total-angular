@@ -7,6 +7,8 @@ import { Component, ViewChild, ElementRef, OnInit, AfterViewInit, OnDestroy } fr
 export class CanvasComponent implements OnInit, AfterViewInit, OnDestroy {
   private raf;
   private context;
+  private canvas;
+  private bounds;
 
   event: MouseEvent;
   clientX = 0;
@@ -102,7 +104,7 @@ export class CanvasComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   start() {
-    this.loop();
+    this.loop(new Date());
   }
 
   stop() {
@@ -115,8 +117,8 @@ export class CanvasComponent implements OnInit, AfterViewInit, OnDestroy {
   loop(now) {
     this.update(now);
     this.draw(this.context);
-    this.raf = requestAnimationFrame(() => {
-        this.loop();
+    this.raf = requestAnimationFrame((now) => {
+        this.loop(now);
     });      
   }
 

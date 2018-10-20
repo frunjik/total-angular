@@ -7,6 +7,8 @@ import { Component, ViewChild, ElementRef, OnInit, AfterViewInit, OnDestroy } fr
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private raf;
   private context;
+  private canvas;
+  private bounds;
 
   event: MouseEvent;
   clientX = 0;
@@ -92,7 +94,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  drawPath(ctx, path, color, lw = 2) {
+  drawPath(ctx, path) {
     if (!path || path.length < 1) { return; }
     const p = path[0];
     ctx.moveTo(p.x, p.y);
@@ -154,7 +156,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   start() {
-    this.loop();
+    this.raf = requestAnimationFrame((now) => {
+        this.loop(now);
+    });      
   }
 
   stop() {
@@ -167,8 +171,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   loop(now) {
     this.update(now);
     this.draw(this.context);
-    this.raf = requestAnimationFrame(() => {
-        this.loop();
+    this.raf = requestAnimationFrame((now) => {
+        this.loop(now);
     });      
   }
 
