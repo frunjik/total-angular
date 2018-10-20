@@ -4,14 +4,14 @@
 
         <mat-accordion>
 
-        <mat-expansion-panel *ngFor="let topic of app.topics" open>
+        <mat-expansion-panel *ngFor="let part of app.parts" open>
             <mat-expansion-panel-header>
             <mat-panel-title>
-                {{topic.title}}
+                {{part.title}}
             </mat-panel-title>
             </mat-expansion-panel-header>
             <mat-list>
-                <mat-list-item *ngFor="let filename of topic.filenames">
+                <mat-list-item *ngFor="let filename of part.filenames">
                 <button mat-button (click)="editor.openFile(filename)">
                     {{filename}}
                 </button>

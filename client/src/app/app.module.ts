@@ -19,11 +19,15 @@ import { EditorComponent } from './editor/editor.component';
 import { PlaygroundComponent } from './playground/playground.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { CommandsComponent } from './commands/commands.component';
+// import { ThreejsComponent } from './threejs/threejs.component';
+
+import { EditThisComponent } from './components/edit-this/edit-this.component';
 import { EditLinksComponent } from './components/edit-links/edit-links.component';
 import { CanvasComponent } from './components/canvas/canvas.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
+  // { path: 'threejs', component: ThreejsComponent },
   { path: 'edit', component: EditComponent },
   { path: 'commands', component: CommandsComponent },
   { path: 'editor', component: EditorComponent },
@@ -45,7 +49,9 @@ const routes: Routes = [
     PlaygroundComponent, 
     PagenotfoundComponent,
     EditLinksComponent,
-    CanvasComponent
+    EditThisComponent,
+    CanvasComponent,
+    // ThreejsComponent,
   ],
   imports: [
     MonacoEditorModule.forRoot(),   // use forRoot() in main app module only.

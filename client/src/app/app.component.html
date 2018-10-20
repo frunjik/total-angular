@@ -17,20 +17,8 @@
 
 <mat-toolbar>
     <span>
-        <button mat-button [routerLink]="['/home']" queryParamsHandling preserveFragment>
-        home
-        </button>
-
-        <button mat-button [routerLink]="['/commands']" queryParamsHandling preserveFragment>
-        commands
-        </button>
-    </span>
-
-    <!-- span class="fill-remaining-space"></span -->
-
-    <span>
-        <button mat-button [routerLink]="['/edit']" queryParamsHandling preserveFragment>
-        edit
+        <button *ngFor="let page of pages" mat-button [routerLink]="[page.title]" queryParamsHandling preserveFragment>
+            {{page.title}}
         </button>
     </span>
 </mat-toolbar>

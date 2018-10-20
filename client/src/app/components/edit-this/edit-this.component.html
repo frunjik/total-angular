@@ -1,0 +1,11 @@
+<button (click)="editor.openFile(filenameTS)" mat-icon-button>
+    <mat-icon>view_quilt</mat-icon>
+</button>
+<button (click)="editor.openFile(filenameHTML)" mat-icon-button>
+    <mat-icon>view_stream</mat-icon>
+</button>
+<button (click)="editor.openFile(filenameCSS)" mat-icon-button>
+    <mat-icon>view_module</mat-icon>
+</button>
+<app-editor #editor loadfile="{{filenameTS}}"></app-editor>
+

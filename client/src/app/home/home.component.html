@@ -36,6 +36,10 @@
             </mat-card-footer>
         </mat-card>
 
+    </div>
+
+    <div class="bigitem">
+        <!--
         <button (click)="editor.loadfile = 'client/src/app/home/home.component.ts'" mat-icon-button>
             <mat-icon>view_quilt</mat-icon>
         </button>
@@ -45,11 +49,10 @@
         <button (click)="editor.loadfile = 'client/src/app/home/home.component.css'" mat-icon-button>
             <mat-icon>view_module</mat-icon>
         </button>
+        -->
+        <!-- app-editor #editor loadfile="client/src/app/home/home.component.ts"></app-editor -->
 
-    </div>
-
-    <div class="bigitem">
-        <app-editor #editor loadfile="client/src/app/home/home.component.ts"></app-editor>
+        <app-edit-this page="home"></app-edit-this>
     </div>
 
 </div>
