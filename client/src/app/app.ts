@@ -18,9 +18,11 @@ export const app = {
         'DONE better navigation',
         'DONE editor.filename*',
     ],
-    topics: [
+    parts: [
         { 
             title: 'current',
+            kind: 'other',
+            menu: false,
             filenames: [
                 'client/src/app/app.ts',
                 'client/src/app/home/home.component.ts',
@@ -28,27 +30,35 @@ export const app = {
                 'client/src/app/home/home.component.css',
             ]
         },
+        page('home'),
+        // page('threejs'),
+        nonMenuPage('woodpusher'),
+        page('commands'),
+        page('editor'),
+        page('edit'),
         { 
             title: 'svg',
+            kind: 'other',
+            menu: false,
             filenames: [
                 'client/src/assets/prompt.svg',
                 'client/src/assets/bluerect.svg',
                 'client/src/assets/example.svg',
             ]
         },
-        page('home'),
         { 
             title: 'app',
+            kind: 'other',
+            menu: false,
             filenames: sourceFilenames('app'),
         },
-        page('woodpusher'),
-        page('commands'),
-        page('edit'),
-        page('editor'),
         component('canvas'),
         component('edit-links'),
+        component('edit-this'),
         { 
             title: 'services',
+            kind: 'other',
+            menu: false,
             filenames: [
                 'client/src/app/fs.service.ts',
                 'client/src/app/command.service.ts',
@@ -56,6 +66,8 @@ export const app = {
         },
         { 
             title: 'client',
+            kind: 'other',
+            menu: false,
             filenames: [
                 'client/package.json',
                 'client/src/index.html',
@@ -80,6 +92,8 @@ export const app = {
         },
         { 
             title: 'server',
+            kind: 'other',
+            menu: false,
             filenames: [
                 './README.md',
                 'server/controllers/files.js',
@@ -107,6 +121,8 @@ function componentFilenames(component) {
 
 function component(name) {
     return {
+        kind: 'component',
+        menu: false,
         title: name,
         filenames: componentFilenames(name)
     };
@@ -114,6 +130,17 @@ function component(name) {
 
 function page(name) {
     return {
+        kind: 'page',
+        menu: true,
+        title: name,
+        filenames: pageFilenames(name)
+    };
+}
+
+function nonMenuPage(name) {
+    return {
+        kind: 'page',
+        menu: false,
         title: name,
         filenames: pageFilenames(name)
     };
