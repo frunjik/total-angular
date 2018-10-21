@@ -9,26 +9,29 @@ export class EditThisComponent implements OnInit {
 
   @Input()
   page: string;
+
+  @Input()
+  file: string;
+
   constructor() { }
 
   ngOnInit() {
   }
 
-  get name() {
-      return this.page;
+  get filename() {
+      return this.file || this.pagenameTS;
   }
 
-  get filenameTS() {
-      const name = this.name;
+  get pagenameTS() {
+      const name = this.page;
       return `client/src/app/${name}/${name}.component.ts`;
   }
-  get filenameCSS() {
-      const name = this.name;
+  get pagenameCSS() {
+      const name = this.page;
       return `client/src/app/${name}/${name}.component.css`;
   }
-  get filenameHTML() {
-      const name = this.name;
+  get pagenameHTML() {
+      const name = this.page;
       return `client/src/app/${name}/${name}.component.html`;
   }
-
 }
