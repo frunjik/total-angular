@@ -1,11 +1,20 @@
-<button (click)="editor.openFile(filenameTS)" mat-icon-button>
-    <mat-icon>view_quilt</mat-icon>
-</button>
-<button (click)="editor.openFile(filenameHTML)" mat-icon-button>
-    <mat-icon>view_stream</mat-icon>
-</button>
-<button (click)="editor.openFile(filenameCSS)" mat-icon-button>
-    <mat-icon>view_module</mat-icon>
-</button>
-<app-editor #editor loadfile="{{filenameTS}}"></app-editor>
+<div *ngIf="page">
+    <button (click)="editor.openFile(pagenameTS)" mat-icon-button>
+        <mat-icon>view_quilt</mat-icon>
+    </button>
+    <button (click)="editor.openFile(pagenameHTML)" mat-icon-button>
+        <mat-icon>view_stream</mat-icon>
+    </button>
+    <button (click)="editor.openFile(pagenameCSS)" mat-icon-button>
+        <mat-icon>view_module</mat-icon>
+    </button>
+    <ng-content></ng-content>
+</div>
+<div *ngIf="file">
+    <button (click)="editor.openFile(file)" mat-icon-button>
+        <mat-icon>view_quilt</mat-icon>
+    </button>
+</div>
+<app-editor #editor loadfile="{{filename}}"></app-editor>
+
 
