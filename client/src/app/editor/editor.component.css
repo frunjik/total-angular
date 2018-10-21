@@ -1,6 +1,6 @@
 ngx-monaco-editor {
     display: block;
-    height: 650px;
+    height: 630px;
 }
 
 .me-fullscreen {
@@ -11,7 +11,7 @@ ngx-monaco-editor {
 }
 
 .input-field {
-    width: 40%;
+    width: 80%;
 }
 
 .fill-remaining-space {
