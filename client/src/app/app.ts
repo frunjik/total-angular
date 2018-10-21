@@ -98,6 +98,7 @@ export const app = {
             filenames: [
                 './README.md',
                 'server/controllers/files.js',
+                'server/controllers/angular.js',
                 'server/controllers/commands.js',
             ]
         },
