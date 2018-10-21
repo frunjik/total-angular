@@ -1,10 +1,44 @@
-<div class="row">
+<div class="row"
+>
 
 <div class="big">
-    <canvas #scene>
+    <canvas #scene
+    tabindex="1"
+    (mouseenter)="onEvent($event)"
+    (mouseleave)="onEvent($event)"
+    (mousemove)="onMouseMove($event)"
+    (mousedown)="onMouseDownEvent($event)"
+    (mouseup)="onMouseUpEvent($event)"
+    (keydown)="onKeyDownEvent($event)"
+    (keyup)="onKeyUpEvent($event)"
+    on-wheel="onWheelEvent($event)"
+    on-click="onClickEvent($event)"
+    on-dblclick="onDblClickEvent($event)"
+    on-contextmenu="onEvent($event)"
+    oncontextmenu="return false;"
+    >
     </canvas>
+
+<div class="row">
+<div class="small">
+position: ({{game.mouse.position.x}}, {{game.mouse.position.y}})<br/>
+</div>
+<div class="small">
+delta: ({{game.mouse.delta.x}}, {{game.mouse.delta.y}})
+</div>
+<div class="small">
+camera: ({{game.camera.position.x}}, {{game.camera.position.y}}, {{game.camera.position.z}})<br/>
+</div>
+<div class="small">
+Keys:
+<span *ngFor="let key of keys">
+"{{key}}"
+</span>
+&nbsp;
+</div>
+</div>
 </div>
 
-<app-edit-this page="threejs" class="small"></app-edit-this>
-
+<app-edit-this width="100%" file="client/src/app/threejs/game.ts" page="threejs" class="small">
+</app-edit-this>
 </div>
