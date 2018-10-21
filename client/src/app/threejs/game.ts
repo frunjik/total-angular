@@ -11,6 +11,7 @@ export class Game  {
   private directionalLight;
   private canvas;
   private cube;
+  private floor;
   private scene;
   private camera;
   private renderer;
@@ -20,17 +21,130 @@ export class Game  {
   private mouse = new Mouse();
   private keyboard = new Keyboard();
 
+
+
+  createGrassShader(o) {
+
+    // const uniforms1 = {
+	// 	time: { value: 1.0 }
+	// };
+
+    const vertexShader = `varying vec2 vUv;
+void main()
+{
+    vUv = uv;
+    vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+    gl_Position = projectionMatrix * mvPosition;
+}`;
+
+    const fragmentShader = `#ifdef GL_ES
+precision mediump float;
+#endif
+
+//#extension GL_OES_standard_derivatives : enable
+
+varying vec2 vUv;
+
+uniform float time;
+//uniform vec2 mouse;
+uniform vec2 resolution;
+
+const float pi = acos(-1.0);
+
+float rand(vec2 n) { 
+    // return 0.6;
+	return fract(sin(dot(n, vec2(12.9898, 4.1414))) * 43758.5453);
+}
+
+float noise(vec2 p){
+	const int res = 16;
+	//const float invRes = 1.0 / float(res);
+	
+	p *= float(res);
+	vec2 n = floor(p);
+	vec2 f = fract(p);
+	
+	f = f * f * (3.0 - 2.0 * f);
+	
+	float n0 = rand(n);
+	float n1 = rand(n + vec2(1.0, 0.0));
+	float n2 = rand(n + vec2(0.0, 1.0));
+	float n3 = rand(n + vec2(1.0, 1.0));
+	
+	float m0 = mix(n0, n1, f.x);
+	float m1 = mix(n2, n3, f.x);
+	
+	return mix(m0, m1, f.y);
+}
+
+void main( void ) {
+
+	// vec2 position = gl_FragCoord.xy / resolution.xy;
+	// vec2 position = fragCoord.xy;
+
+	// vec2 position = gl_FragCoord.xy;
+	vec2 position = vUv;    // / resolution.xy;
+	vec3 color = vec3(0.0,1,0);
+
+	color += noise(position) * 0.5;
+	color += noise(position * 2.0) * 0.25;
+	color += noise(position * 4.0) * 0.125;
+	color += noise(position * 8.0) * 0.064;
+	color += noise(position * 16.0) * 0.032;
+	color += noise(position * 32.0) * 0.016;
+	color += noise(position * 64.0) * 0.008;
+	
+	color *= 0.1;
+
+	gl_FragColor = vec4(color, 1.0 );
+
+}`;
+
+    const w = 120;
+    const h = 120;
+    return new THREE.ShaderMaterial( {
+        uniforms: {
+            time: { value: 1.0 },
+            resolution: { value: new THREE.Vector2(w, h) }
+        },
+        vertexShader: vertexShader,
+        fragmentShader: fragmentShader
+    } );
+  }
+
+
   create() {
     this.sensitivity = 0.01;
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(75, this.w / this.h, 0.1, 1000);
-    this.camera.position.z = -5;  
-    this.camera.position.x = -2;  
-    this.camera.position.y = 3;  
+    this.camera.position.x = 10;  
+    this.camera.position.y = 13;  
+    this.camera.position.z = -6;  
+
+    /*
+0x224c1a	(34,76,26)
+0x505f20	(80,95,32)
+0x15a447	(21,164,71)
+0x40aeca	(64,174,202)
+0xb9bcff	(185,188,255)
+    */
 
     var geometry = new THREE.BoxGeometry(1, 1, 1);
     var material = new THREE.MeshLambertMaterial({ color: 0xfa11cc });
-    // var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    var floorMaterial = new THREE.MeshBasicMaterial({ color: 0x929385 });
+    this.cube = new THREE.Mesh(geometry, material);
+    this.cube.position.z = 0;  
+    this.cube.position.x = 0;  
+    this.cube.position.y = 5;  
+    this.cube.scale.y = 10;  
+    this.scene.add(this.cube);
+console.log('FLOOR:', floorMaterial);    
+       
+    
+    var grass = this.createGrassShader(floorMaterial);
+console.log('GRASS:', grass);    
+
+    // var floorMaterial = new THREE.MeshBasicMaterial({ color: 0xd5e9cf });
 
     this.directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
     this.scene.add(this.directionalLight);
@@ -38,12 +152,12 @@ export class Game  {
     this.light = new THREE.AmbientLight( 0x404040 ); // soft white light
     this.scene.add(this.light);
 
-    this.cube = new THREE.Mesh(geometry, material);
-    this.cube.position.z = 0.5;  
-    this.cube.position.x = 0.5;  
-    this.cube.position.y = 0.5;  
-    
-    this.scene.add(this.cube);
+    this.floor = new THREE.Mesh(geometry, grass);
+    this.floor.position.y = -0.5;
+    this.floor.scale.z = 150;  
+    this.floor.scale.x = 150;  
+    this.floor.scale.y = 1;  
+    this.scene.add(this.floor);
 
     this.camera.lookAt(this.cube.position);
   }
@@ -66,7 +180,10 @@ export class Game  {
   }
 
   start() {
-    this.loop();  
+    this.raf = requestAnimationFrame((now) => {
+        this.controls.update();
+        this.loop(now);
+    });
   }
 
   stop() {
@@ -79,9 +196,11 @@ export class Game  {
   destroy() {
       this.exit();
       this.scene.remove(this.cube);
+      this.scene.remove(this.floor);
       this.scene.remove(this.light);
       this.scene.remove(this.directionalLight);
       this.cube = null;
+      this.floor = null;
       this.light = null;
       this.directionalLight = null;
       this.camera = null;

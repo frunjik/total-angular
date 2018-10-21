@@ -21,17 +21,17 @@
 
 <div class="row">
 <div class="small">
-position: ({{game.mouse.position.x}}, {{game.mouse.position.y}})<br/>
+position: ({{game.mouse.position.x.toFixed(2)}}, {{game.mouse.position.y.toFixed(2)}})<br/>
 </div>
 <div class="small">
-delta: ({{game.mouse.delta.x}}, {{game.mouse.delta.y}})
+delta: ({{game.mouse.delta.x.toFixed(2)}}, {{game.mouse.delta.y.toFixed(2)}})
 </div>
 <div class="small">
-camera: ({{game.camera.position.x}}, {{game.camera.position.y}}, {{game.camera.position.z}})<br/>
+camera: ({{game.camera.position.x.toFixed(2)}}, {{game.camera.position.y.toFixed(2)}}, {{game.camera.position.z.toFixed(2)}})<br/>
 </div>
 <div class="small">
 Keys:
-<span *ngFor="let key of keys">
+<span *ngFor="let key of game.keys">
 "{{key}}"
 </span>
 &nbsp;
