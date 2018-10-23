@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 import { CameraControls } from './cameracontrols';
 import { Keyboard, Mouse } from './input';
+import { grassVertexShader, grassFragmentShader } from './shaders';
 
 export class Game  {
-
   private w = 640 * 1.5;
   private h = 480 * 1.5;
   private raf;
@@ -14,112 +14,37 @@ export class Game  {
   private floor;
   private scene;
   private camera;
+  private grass;
   private renderer;
   private sensitivity;
   private controls;
 
   private mouse = new Mouse();
   private keyboard = new Keyboard();
-
-
+  private ticks=0;
 
   createGrassShader(o) {
-
-    // const uniforms1 = {
-	// 	time: { value: 1.0 }
-	// };
-
-    const vertexShader = `varying vec2 vUv;
-void main()
-{
-    vUv = uv;
-    vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
-    gl_Position = projectionMatrix * mvPosition;
-}`;
-
-    const fragmentShader = `#ifdef GL_ES
-precision mediump float;
-#endif
-
-//#extension GL_OES_standard_derivatives : enable
-
-varying vec2 vUv;
-
-uniform float time;
-//uniform vec2 mouse;
-uniform vec2 resolution;
-
-const float pi = acos(-1.0);
-
-float rand(vec2 n) { 
-    // return 0.6;
-	return fract(sin(dot(n, vec2(12.9898, 4.1414))) * 43758.5453);
-}
-
-float noise(vec2 p){
-	const int res = 16;
-	//const float invRes = 1.0 / float(res);
-	
-	p *= float(res);
-	vec2 n = floor(p);
-	vec2 f = fract(p);
-	
-	f = f * f * (3.0 - 2.0 * f);
-	
-	float n0 = rand(n);
-	float n1 = rand(n + vec2(1.0, 0.0));
-	float n2 = rand(n + vec2(0.0, 1.0));
-	float n3 = rand(n + vec2(1.0, 1.0));
-	
-	float m0 = mix(n0, n1, f.x);
-	float m1 = mix(n2, n3, f.x);
-	
-	return mix(m0, m1, f.y);
-}
-
-void main( void ) {
-
-	// vec2 position = gl_FragCoord.xy / resolution.xy;
-	// vec2 position = fragCoord.xy;
-
-	// vec2 position = gl_FragCoord.xy;
-	vec2 position = vUv;    // / resolution.xy;
-	vec3 color = vec3(0.0,1,0);
-
-	color += noise(position) * 0.5;
-	color += noise(position * 2.0) * 0.25;
-	color += noise(position * 4.0) * 0.125;
-	color += noise(position * 8.0) * 0.064;
-	color += noise(position * 16.0) * 0.032;
-	color += noise(position * 32.0) * 0.016;
-	color += noise(position * 64.0) * 0.008;
-	
-	color *= 0.1;
-
-	gl_FragColor = vec4(color, 1.0 );
-
-}`;
-
     const w = 120;
     const h = 120;
     return new THREE.ShaderMaterial( {
         uniforms: {
-            time: { value: 1.0 },
+            time: { value: (new Date()).getMilliseconds() },
             resolution: { value: new THREE.Vector2(w, h) }
         },
-        vertexShader: vertexShader,
-        fragmentShader: fragmentShader
+        vertexShader: grassVertexShader,
+        fragmentShader: grassFragmentShader
     } );
   }
-
 
   create() {
     this.sensitivity = 0.01;
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(75, this.w / this.h, 0.1, 1000);
-    this.camera.position.x = 10;  
-    this.camera.position.y = 13;  
-    this.camera.position.z = -6;  
+
+    const away = 6;
+    this.camera.position.x = 10 * away;  
+    this.camera.position.y = 13 * away;  
+    this.camera.position.z = -6 * away;  
 
     /*
 0x224c1a	(34,76,26)
@@ -141,8 +66,8 @@ void main( void ) {
 console.log('FLOOR:', floorMaterial);    
        
     
-    var grass = this.createGrassShader(floorMaterial);
-console.log('GRASS:', grass);    
+    this.grass = this.createGrassShader(floorMaterial);
+console.log('GRASS:', this.grass);    
 
     // var floorMaterial = new THREE.MeshBasicMaterial({ color: 0xd5e9cf });
 
@@ -152,7 +77,7 @@ console.log('GRASS:', grass);
     this.light = new THREE.AmbientLight( 0x404040 ); // soft white light
     this.scene.add(this.light);
 
-    this.floor = new THREE.Mesh(geometry, grass);
+    this.floor = new THREE.Mesh(geometry, this.grass);
     this.floor.position.y = -0.5;
     this.floor.scale.z = 150;  
     this.floor.scale.x = 150;  
@@ -202,12 +127,21 @@ console.log('GRASS:', grass);
       this.cube = null;
       this.floor = null;
       this.light = null;
+      this.grass = null;
       this.directionalLight = null;
       this.camera = null;
       this.scene = null;
   }
 
   loop(now = 0) {
+    if (now - this.ticks> 3000) {
+    //     this.grass.needsUpdate = true;
+    //     this.grass.uniforms.time.value = ((now % 100) * 100);
+        this.ticks = now;
+
+    //     console.log(this.grass.uniforms.time.value);
+    }
+
     this.renderer.render(this.scene, this.camera);
     this.raf = requestAnimationFrame((now) => {
         this.loop(now);
@@ -218,6 +152,7 @@ console.log('GRASS:', grass);
   }
 
   onWheelEvent(event) {
+// console.log(event.wheelDelta);
       if (event.wheelDelta>0) {
             this.controls.dollyIn(event.wheelDelta * this.sensitivity);
       }
@@ -253,6 +188,7 @@ console.log('GRASS:', grass);
   }
 
   onMouseMove(event) {
+// console.log(event);
     this.mouse.onMouseMove(event);
     if(this.mouse.left) {
         if (this.keyboard.keys['Shift']) {
@@ -264,9 +200,25 @@ console.log('GRASS:', grass);
         }
         this.controls.update();
     } 
+    if(this.mouse.right) {
+        if (this.keyboard.keys['Shift']) {
+            if(event.movementY) {
+
+                if (event.movementY>0) {
+                        this.controls.dollyOut(120 * this.sensitivity);
+                }
+                else {
+                        this.controls.dollyIn(120 * this.sensitivity);
+                }
+                
+                this.controls.update();
+            }
+        }
+    } 
   }
 
   get keys() {
     return Object.keys(this.keyboard.keys);
   }
 }
+ 
