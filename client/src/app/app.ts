@@ -1,6 +1,6 @@
 export const app = {
     title: 'Workbench v0.0.1',
-    default: 'threejs',
+    default: 'shader-builder',
     todo: [
         'make side menu nested',
         'make side menu global',
@@ -32,6 +32,7 @@ export const app = {
             ]
         },
         page('home'),
+        page('shader-builder'),
         page('threejs'),
         nonMenuPage('woodpusher'),
         page('commands'),

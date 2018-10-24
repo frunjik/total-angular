@@ -1,0 +1,8 @@
+.container {
+   display: flex;
+   Xheight: 500px;
+}
+
+.item {
+   flex: 1 0 0;
+}

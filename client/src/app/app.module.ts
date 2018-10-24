@@ -20,6 +20,7 @@ import { PlaygroundComponent } from './playground/playground.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { CommandsComponent } from './commands/commands.component';
 import { ThreejsComponent } from './threejs/threejs.component';
+import { ShaderBuilderComponent } from './shader-builder/shader-builder.component';
 
 import { EditThisComponent } from './components/edit-this/edit-this.component';
 import { EditLinksComponent } from './components/edit-links/edit-links.component';
@@ -34,6 +35,7 @@ const routes: Routes = [
   { path: 'commands', component: CommandsComponent },
   { path: 'editor', component: EditorComponent },
   { path: 'playground', component: PlaygroundComponent },
+  { path: 'shader-builder', component: ShaderBuilderComponent },
   { path: '',
     redirectTo: app.default,
     pathMatch: 'full'
@@ -53,6 +55,7 @@ const routes: Routes = [
     EditLinksComponent,
     EditThisComponent,
     CanvasComponent,
+    ShaderBuilderComponent,
     ThreejsComponent,
   ],
   imports: [
