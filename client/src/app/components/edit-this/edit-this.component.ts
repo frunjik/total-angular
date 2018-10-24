@@ -13,6 +13,9 @@ export class EditThisComponent implements OnInit {
   @Input()
   file: string;
 
+  @Input()
+  height: string;
+
   constructor() { }
 
   ngOnInit() {

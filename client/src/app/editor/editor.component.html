@@ -1,3 +1,4 @@
+<div>
 <mat-expansion-panel>
     <mat-expansion-panel-header>
         <mat-panel-title>Filename</mat-panel-title>
@@ -11,7 +12,9 @@
     </form>
 </mat-expansion-panel>
 
-<ngx-monaco-editor [options]="editorOptions" [(ngModel)]="filedata"></ngx-monaco-editor>
+<div [ngStyle]="editorStyle">
+  <ngx-monaco-editor [options]="editorOptions" [(ngModel)]="filedata"></ngx-monaco-editor>
+</div>
 
 <mat-toolbar class="small-toolbar">
     <button (click)="getFile()" mat-button>load</button>
@@ -21,3 +24,4 @@
     <span>
     </span>
 </mat-toolbar>
+</div>

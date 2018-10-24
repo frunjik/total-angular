@@ -20,6 +20,14 @@ export class EditorComponent implements OnInit {
     this.openFile(name);
   }
 
+  @Input()
+  set height(value: string) {
+    this.editorStyle.height = value;
+  }
+
+  editorStyle = {
+    height: '300px'
+  };
   editorOptions = {theme: 'vs-dark', language: 'javascript'};
 
   constructor(
