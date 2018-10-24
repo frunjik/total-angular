@@ -1,7 +1,13 @@
 import * as THREE from 'three';
 import { CameraControls } from './cameracontrols';
 import { Keyboard, Mouse } from './input';
-import { grassVertexShader, grassFragmentShader } from './shaders';
+import { grassVertexShader, 
+    grassFragmentShader, 
+    sobelFragmentShader, 
+    contourFragmentShader, 
+    blackFragmentShader, 
+    starFragmentShader,
+    cosFragmentShader } from './shaders';
 
 export class Game  {
   private w = 640 * 1.5;
@@ -10,6 +16,7 @@ export class Game  {
   private light;
   private directionalLight;
   private canvas;
+  private bounds;
   private cube;
   private floor;
   private scene;
@@ -23,7 +30,91 @@ export class Game  {
   private keyboard = new Keyboard();
   private ticks=0;
 
-  createGrassShader(o) {
+  private materials  = {};
+  private geometries = {};
+  private shaders = {};
+
+  private mx = 0;
+  private my = 0;
+  private raycaster;
+
+  getorset(m, name, o) {
+    if (o) {
+        m[name] = o;
+    }
+    else {
+        o = m[name];
+    }
+    return o;
+  }
+
+  material(name, m=null) {
+    return this.getorset(this.materials, name, m);
+  }
+
+  geometry(name, g=null) {
+    return this.getorset(this.geometries, name, g);
+  }
+
+  shader(name, s=null) {
+    return this.getorset(this.shaders, name, s);
+  }
+
+  createOrbiter() {
+
+    const x = 4, z = 4, y = 1;
+    const w = 0.4, h = 20, o = 0.1;
+
+    let box = new THREE.BoxBufferGeometry( 1, 1, 1 );
+    // let xaxis = new THREE.BoxBufferGeometry( h, w, w );
+    // let yaxis = new THREE.BoxBufferGeometry( w, h, w );
+    // let zaxis = new THREE.BoxBufferGeometry( w, w, h );
+    let material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+    let red = new THREE.MeshBasicMaterial( {color: 0xff0000} );
+    let green = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+    let blue = new THREE.MeshBasicMaterial( {color: 0x0000ff} );
+
+    let cubeA = new THREE.Mesh( box, red );
+    cubeA.position.set( x+(h/2)+o, y+0, z+0 );
+    cubeA.scale.x = h;
+    cubeA.scale.y = w;
+    cubeA.scale.z = w;
+    cubeA.name = 'red';
+
+    // let cubeX = new THREE.Mesh( box, this.shader('contour') );
+    // cubeX.position.set( x+0.5, y+(h/2)+o, z+0.5 );
+    // cubeX.scale.x = w+0.3;
+    // cubeX.scale.y = h+0.3;
+    // cubeX.scale.z = w+0.3;
+    // cubeX.name = 'greenX';
+
+    let cubeB = new THREE.Mesh( box, green );
+    cubeB.position.set( x+0, y+(h/2)+o, z+0 );
+    cubeB.scale.x = w;
+    cubeB.scale.y = h;
+    cubeB.scale.z = w;
+    cubeB.name = 'green';
+
+
+    // let cubeC = new THREE.Mesh( box, blue );
+    let cubeC = new THREE.Mesh( box, this.shader('cos') );
+    cubeC.position.set( x+0, y+0, z+(h/2)+o );
+    cubeC.scale.x = w;
+    cubeC.scale.y = w;
+    cubeC.scale.z = h;
+    cubeC.name = 'blue';
+
+    //create a group and add the three axis
+    let group = new THREE.Group();
+    group.add( cubeA );
+    group.add( cubeB );
+    group.add( cubeC );
+    // group.add( cubeX );
+
+    return group;
+  }
+
+  createGrassShader() {
     const w = 120;
     const h = 120;
     return new THREE.ShaderMaterial( {
@@ -36,7 +127,26 @@ export class Game  {
     } );
   }
 
+  createShader(fs) {
+    const w = 120;
+    const h = 120;
+    return new THREE.ShaderMaterial( {
+        uniforms: {
+            time: { value: (new Date()).getMilliseconds() },
+            resolution: { value: new THREE.Vector2(w, h) }
+        },
+        vertexShader: grassVertexShader,
+        fragmentShader: fs
+    } );
+  }
+
   create() {
+    this.shader('star', this.createShader(starFragmentShader));
+    this.shader('BLACK', this.createShader(blackFragmentShader));
+    this.shader('sobel', this.createShader(sobelFragmentShader));
+    // this.shader('contour', this.createShader(contourFragmentShader));
+    this.shader('cos', this.createShader(cosFragmentShader));
+
     this.sensitivity = 0.01;
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(75, this.w / this.h, 0.1, 1000);
@@ -55,6 +165,8 @@ export class Game  {
     */
 
     var geometry = new THREE.BoxGeometry(1, 1, 1);
+    this.geometry('cube', geometry);
+
     var material = new THREE.MeshLambertMaterial({ color: 0xfa11cc });
     var floorMaterial = new THREE.MeshBasicMaterial({ color: 0x929385 });
     this.cube = new THREE.Mesh(geometry, material);
@@ -62,14 +174,9 @@ export class Game  {
     this.cube.position.x = 0;  
     this.cube.position.y = 5;  
     this.cube.scale.y = 10;  
+    this.cube.name = 'pole';  
     this.scene.add(this.cube);
-console.log('FLOOR:', floorMaterial);    
-       
-    
-    this.grass = this.createGrassShader(floorMaterial);
-console.log('GRASS:', this.grass);    
-
-    // var floorMaterial = new THREE.MeshBasicMaterial({ color: 0xd5e9cf });
+    this.grass = this.createGrassShader();
 
     this.directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
     this.scene.add(this.directionalLight);
@@ -82,13 +189,24 @@ console.log('GRASS:', this.grass);
     this.floor.scale.z = 150;  
     this.floor.scale.x = 150;  
     this.floor.scale.y = 1;  
+    this.floor.name = 'floor';  
     this.scene.add(this.floor);
+    this.scene.add(this.createOrbiter());
 
     this.camera.lookAt(this.cube.position);
+
+    this.raycaster = new THREE.Raycaster();
+    //mouse = new THREE.Vector2();    
+    
+
+    console.log(this.shaders);
   }
 
   init(canvas) {
     this.canvas = canvas;
+
+    this.bounds = this.canvas.getBoundingClientRect();
+    
     this.canvas.width = this.w;
     this.canvas.height = this.h;
     this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas } );
@@ -120,10 +238,13 @@ console.log('GRASS:', this.grass);
 
   destroy() {
       this.exit();
-      this.scene.remove(this.cube);
-      this.scene.remove(this.floor);
-      this.scene.remove(this.light);
-      this.scene.remove(this.directionalLight);
+      while(this.scene.children.length > 0){ 
+        this.scene.remove(this.scene.children[0]);
+      }
+    //   this.scene.remove(this.cube);
+    //   this.scene.remove(this.floor);
+    //   this.scene.remove(this.light);
+    //   this.scene.remove(this.directionalLight);
       this.cube = null;
       this.floor = null;
       this.light = null;
@@ -131,16 +252,50 @@ console.log('GRASS:', this.grass);
       this.directionalLight = null;
       this.camera = null;
       this.scene = null;
-  }
+
+      this.geometries = null;
+      this.materials = null;
+      this.shaders = null;
+      this.raycaster = null;
+ }
 
   loop(now = 0) {
-    if (now - this.ticks> 3000) {
+    // if (now - this.ticks> 3000) {
     //     this.grass.needsUpdate = true;
     //     this.grass.uniforms.time.value = ((now % 100) * 100);
-        this.ticks = now;
+    //     this.ticks = now;
 
-    //     console.log(this.grass.uniforms.time.value);
+    // //     console.log(this.grass.uniforms.time.value);
+    // }
+
+const s = this.shader('cos');
+// console.log('S', s);
+    s.uniforms.time.value = ((now/5000) % 100) / 100;
+    s.needsUpdate = true;
+
+
+
+    // this.raycaster = new THREE.Raycaster();
+	// 			mouse = new THREE.Vector2();
+
+    // this.raycaster.setFromCamera(this.mouse.position, this.camera);
+    this.raycaster.setFromCamera({x: this.mx, y: this.my}, this.camera);
+	var intersects = this.raycaster.intersectObject(this.scene, true);
+
+
+    let f = intersects.find(i => i.object.name === 'floor');
+    if (f) {
+        let x = intersects.indexOf(f);
+        if (x>=0) {
+            intersects.splice(x, 1);
+        }
     }
+
+    if (intersects.length) {
+        intersects.forEach(i => console.log(i.object.name));
+    }
+
+
 
     this.renderer.render(this.scene, this.camera);
     this.raf = requestAnimationFrame((now) => {
@@ -188,7 +343,14 @@ console.log('GRASS:', this.grass);
   }
 
   onMouseMove(event) {
-// console.log(event);
+
+
+
+    this.mx = ( (event.clientX-this.bounds.x) / this.canvas.width ) * 2 - 1;
+	this.my = - ( (event.clientY-this.bounds.y) / this.canvas.height ) * 2 + 1;
+
+// console.log(mx, my);
+
     this.mouse.onMouseMove(event);
     if(this.mouse.left) {
         if (this.keyboard.keys['Shift']) {
