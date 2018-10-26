@@ -22,6 +22,7 @@ import { CommandsComponent } from './commands/commands.component';
 import { ThreejsComponent } from './threejs/threejs.component';
 import { ShaderBuilderComponent } from './shader-builder/shader-builder.component';
 import { CurrentComponent } from './current/current.component';
+import { WoodpusherComponent } from './woodpusher/woodpusher.component';
 
 import { EditThisComponent } from './components/edit-this/edit-this.component';
 import { EditLinksComponent } from './components/edit-links/edit-links.component';
@@ -38,6 +39,7 @@ const routes: Routes = [
   { path: 'editor', component: EditorComponent },
   { path: 'current', component: CurrentComponent },
   { path: 'playground', component: PlaygroundComponent },
+  { path: 'woodpusher', component: WoodpusherComponent },
   { path: 'shader-builder', component: ShaderBuilderComponent },
   { path: '',
     redirectTo: app.default,
@@ -54,6 +56,7 @@ const routes: Routes = [
     EditorComponent, 
     CommandsComponent,
     CurrentComponent, 
+    WoodpusherComponent, 
     PlaygroundComponent, 
     PagenotfoundComponent,
     EditLinksComponent,

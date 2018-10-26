@@ -37,7 +37,7 @@ export const app = {
         page('home'),
         page('shader-builder'),
         page('threejs'),
-        nonMenuPage('woodpusher'),
+        page('woodpusher'),
         page('current'),
         page('commands'),
         page('editor'),
