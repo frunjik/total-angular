@@ -1,5 +1,6 @@
 export const app = {
     title: 'Workbench v0.0.1',
+    history: [],
     default: 'current',
     // default: 'shader-builder',
     todo: [

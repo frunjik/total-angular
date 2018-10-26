@@ -11,4 +11,8 @@ export class EditComponent {
   app = appDefinition;
   constructor(private router: Router) {
   }  
+
+  goto(url) {
+    this.router.navigateByUrl(url);
+  }
 }

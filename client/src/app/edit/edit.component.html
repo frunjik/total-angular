@@ -12,6 +12,19 @@
             <app-find-file></app-find-file>            
         </mat-expansion-panel>
 
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+            <mat-panel-title>
+                history
+            </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div *ngFor="let i of app.history">
+                <button mat-button (click)="goto(i)">
+                    {{i}}
+                </button>
+            </div>
+        </mat-expansion-panel>
+
         <mat-expansion-panel *ngFor="let part of app.parts" open>
             <mat-expansion-panel-header>
             <mat-panel-title>
