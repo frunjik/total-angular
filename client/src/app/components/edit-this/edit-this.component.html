@@ -1,4 +1,4 @@
-<div *ngIf="page">
+<span *ngIf="page">
     PAGE
     <button (click)="editor.openFile(pagenameTS)" mat-icon-button>
         <mat-icon>view_quilt</mat-icon>
@@ -10,8 +10,8 @@
         <mat-icon>view_module</mat-icon>
     </button>
     <ng-content></ng-content>
-</div>
-<div *ngIf="component">
+</span>
+<span *ngIf="component">
     COMP
     <button (click)="editor.openFile(componentnameTS)" mat-icon-button>
         <mat-icon>view_quilt</mat-icon>
@@ -23,13 +23,11 @@
         <mat-icon>view_module</mat-icon>
     </button>
     <ng-content></ng-content>
-</div>
-<div *ngIf="file">
+</span>
+<span *ngIf="file">
     FILE
     <button (click)="editor.openFile(file)" mat-icon-button>
         <mat-icon>view_quilt</mat-icon>
     </button>
-</div>
+</span>
 <app-editor #editor height="{{height}}" loadfile="{{filename}}"></app-editor>
-
-
