@@ -1,0 +1,11 @@
+.row {
+  display:flex;
+}
+
+.big {
+  flex: 5 0 0;
+}
+
+.small {
+  flex: 4 0 0; 
+}
