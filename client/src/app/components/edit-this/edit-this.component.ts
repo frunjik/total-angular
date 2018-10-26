@@ -17,7 +17,7 @@ export class EditThisComponent implements OnInit {
   file: string;
 
   @Input()
-  height: string;
+  height: string = '550px';
 
   constructor() { }
 
