@@ -24,9 +24,14 @@ function getFolders() {
 	var pathname = self.req.query.name;
 
 	U.ls(rootfolder, 
+        // result
 		function(files, folders) {
-			self.res.json({files: files.map(name => name.replace(/\\/g, '/').replace(rootfolder, '')), folders: folders.filter(f => f.indexOf(pathname) !== -1)});
+			self.res.json({
+                files: files.map(name => name.replace(/\\/g, '/').replace(rootfolder, '')), 
+                folders: folders.filter(f => f.indexOf(pathname) !== -1)
+            });
 		},
+        // filter
 		function(filename, isDirectory) {
 			if(isDirectory) {
 				return (!filename.endsWith('.git') && filename.indexOf('node_modules') === -1);
