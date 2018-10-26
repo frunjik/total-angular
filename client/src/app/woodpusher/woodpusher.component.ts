@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
+import * as THREE from 'three';
 
 @Component({
   selector: 'app-woodpusher',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./woodpusher.component.css']
 })
 export class WoodpusherComponent implements OnInit {
+
+  @ViewChild('canvas') canvasElement: ElementRef;
 
   constructor() { }
 
