@@ -21,8 +21,11 @@ export class AppComponent {
   router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
         // this.history.push(val.url);
-        if (val.url !== '/edit') 
-            this.history.splice(0, 0, val.url); 
+        if (val.url !== '/edit') {
+          this.history.splice(0, 0, val.url.replace(/\%2F/g, '/')); 
+          this.history.splice(100);
+        }
+        this.setTitle(val.url);
       }
     });
   }
