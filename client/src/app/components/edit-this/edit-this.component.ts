@@ -25,7 +25,8 @@ export class EditThisComponent implements OnInit {
   }
 
   get filename() {
-      return this.file || this.pagenameTS || this.componentnameTS;
+      return this.component ? this.componentnameTS :
+              this.page ? this.pagenameTS : this.file;
   }
   // @TODO Cleanup ...
   get pagenameTS() {
