@@ -1,0 +1,11 @@
+<input #input (keyup.enter)="onEnter(input.value)">
+<button mat-button (click)="onEnter(input.value)">
+go
+</button>
+<mat-list>
+    <mat-list-item *ngFor="let filename of entries.files">
+    <button mat-button (click)="edit(filename)">
+        {{filename}}
+    </button>
+    </mat-list-item>
+</mat-list>

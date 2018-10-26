@@ -3,6 +3,15 @@
 
         <mat-accordion>
 
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+            <mat-panel-title>
+                search
+            </mat-panel-title>
+            </mat-expansion-panel-header>
+            <app-find-file></app-find-file>            
+        </mat-expansion-panel>
+
         <mat-expansion-panel *ngFor="let part of app.parts" open>
             <mat-expansion-panel-header>
             <mat-panel-title>

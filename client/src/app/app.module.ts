@@ -21,10 +21,12 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { CommandsComponent } from './commands/commands.component';
 import { ThreejsComponent } from './threejs/threejs.component';
 import { ShaderBuilderComponent } from './shader-builder/shader-builder.component';
+import { CurrentComponent } from './current/current.component';
 
 import { EditThisComponent } from './components/edit-this/edit-this.component';
 import { EditLinksComponent } from './components/edit-links/edit-links.component';
 import { CanvasComponent } from './components/canvas/canvas.component';
+import { FindFileComponent } from './components/find-file/find-file.component';
 
 import { app } from './app';
 
@@ -34,6 +36,7 @@ const routes: Routes = [
   { path: 'edit', component: EditComponent },
   { path: 'commands', component: CommandsComponent },
   { path: 'editor', component: EditorComponent },
+  { path: 'current', component: CurrentComponent },
   { path: 'playground', component: PlaygroundComponent },
   { path: 'shader-builder', component: ShaderBuilderComponent },
   { path: '',
@@ -50,10 +53,12 @@ const routes: Routes = [
     EditComponent, 
     EditorComponent, 
     CommandsComponent,
+    CurrentComponent, 
     PlaygroundComponent, 
     PagenotfoundComponent,
     EditLinksComponent,
     EditThisComponent,
+    FindFileComponent,
     CanvasComponent,
     ShaderBuilderComponent,
     ThreejsComponent,

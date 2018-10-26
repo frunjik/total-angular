@@ -1,8 +1,10 @@
 export const app = {
     title: 'Workbench v0.0.1',
-    default: 'shader-builder',
+    default: 'current',
+    // default: 'shader-builder',
     todo: [
         'make string-editor (shaders)',
+        'history',
         'make side menu nested',
         'make side menu global',
         'remembering state',
@@ -36,6 +38,7 @@ export const app = {
         page('shader-builder'),
         page('threejs'),
         nonMenuPage('woodpusher'),
+        page('current'),
         page('commands'),
         page('editor'),
         page('edit'),
@@ -55,6 +58,7 @@ export const app = {
             menu: false,
             filenames: sourceFilenames('app'),
         },
+        component('find-file'),
         component('canvas'),
         component('edit-links'),
         component('edit-this'),

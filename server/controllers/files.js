@@ -25,7 +25,7 @@ function getFolders() {
 
 	U.ls(rootfolder, 
 		function(files, folders) {
-			self.res.json({files: files.map(name => name.replace(rootfolder, '')), folders: folders});
+			self.res.json({files: files.map(name => name.replace(/\\/g, '/').replace(rootfolder, '')), folders: folders.filter(f => f.indexOf(pathname) !== -1)});
 		},
 		function(filename, isDirectory) {
 			if(isDirectory) {
