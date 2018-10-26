@@ -20,6 +20,7 @@ import { PlaygroundComponent } from './playground/playground.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { CommandsComponent } from './commands/commands.component';
 import { ThreejsComponent } from './threejs/threejs.component';
+import { Wp3Component } from './wp3/wp3.component';
 import { ShaderBuilderComponent } from './shader-builder/shader-builder.component';
 import { CurrentComponent } from './current/current.component';
 import { WoodpusherComponent } from './woodpusher/woodpusher.component';
@@ -39,6 +40,7 @@ const routes: Routes = [
   { path: 'editor', component: EditorComponent },
   { path: 'current', component: CurrentComponent },
   { path: 'playground', component: PlaygroundComponent },
+  { path: 'wp3', component: Wp3Component },
   { path: 'woodpusher', component: WoodpusherComponent },
   { path: 'shader-builder', component: ShaderBuilderComponent },
   { path: '',
@@ -58,6 +60,7 @@ const routes: Routes = [
     EditorComponent, 
     CommandsComponent,
     CurrentComponent, 
+    Wp3Component, 
     WoodpusherComponent, 
     PlaygroundComponent, 
     PagenotfoundComponent,

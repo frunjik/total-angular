@@ -1,0 +1,47 @@
+<div class="row"
+>
+
+<div class="big">
+    <canvas #scene
+    tabindex="1"
+    (mouseenter)="onEvent($event)"
+    (mouseleave)="onEvent($event)"
+    (mousemove)="onMouseMove($event)"
+    (mousedown)="onMouseDownEvent($event)"
+    (mouseup)="onMouseUpEvent($event)"
+    (keydown)="onKeyDownEvent($event)"
+    (keyup)="onKeyUpEvent($event)"
+    on-wheel="onWheelEvent($event)"
+    on-click="onClickEvent($event)"
+    on-dblclick="onDblClickEvent($event)"
+    on-contextmenu="onEvent($event)"
+    oncontextmenu="return false;"
+    >
+    </canvas>
+
+<div class="row">
+<div class="small">
+mx,my: ({{game.mx.toFixed(2)}}, {{game.my.toFixed(2)}})<br/>
+</div>
+<div class="small">
+position: ({{game.mouse.position.x.toFixed(2)}}, {{game.mouse.position.y.toFixed(2)}})<br/>
+</div>
+<div class="small">
+delta: ({{game.mouse.delta.x.toFixed(2)}}, {{game.mouse.delta.y.toFixed(2)}})
+</div>
+<div class="small">
+camera: ({{game.camera.position.x.toFixed(2)}}, {{game.camera.position.y.toFixed(2)}}, {{game.camera.position.z.toFixed(2)}})<br/>
+</div>
+<div class="small">
+Keys:
+<span *ngFor="let key of game.keys">
+"{{key}}"
+</span>
+&nbsp;
+</div>
+</div>
+</div>
+
+<app-edit-this height="640px" width="100%" file="client/src/app/wp3/game.ts" page="wp3" class="small">
+</app-edit-this>
+</div>

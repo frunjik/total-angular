@@ -1,0 +1,21 @@
+.row {
+  display:flex;
+}
+
+.big {
+  flex: 5 0 0;
+}
+
+.small {
+  flex: 4 0 0; 
+}
+
+x-canvas {
+    width: 100%; 
+    height: 100%;
+    background: lightblue;
+}
+
+canvas { 
+    background: lightblue;
+}
