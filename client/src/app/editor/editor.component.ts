@@ -26,7 +26,7 @@ export class EditorComponent implements OnInit {
   }
 
   editorStyle = {
-    height: '320px'
+    height: '550px'
   };
   editorOptions = {theme: 'vs-dark', language: 'javascript'};
 
