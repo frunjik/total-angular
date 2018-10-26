@@ -10,7 +10,7 @@ import { ActivatedRoute }     from '@angular/router';
 })
 export class EditorComponent implements OnInit {
 
-//   filename: string = './client/src/app/app.component.html';
+  status = '';
   filename: string = './client/src/app/components/edit-links/edit-links.component.ts';
   filedata: string = '';
 
@@ -45,6 +45,7 @@ export class EditorComponent implements OnInit {
   }
 
   handleSuccess(file) {
+    this.setStatus('loaded');
     this.setFileData(file.data);
   }
 
@@ -60,6 +61,19 @@ export class EditorComponent implements OnInit {
     this.filename = value;
   }
 
+  timeString(date) {
+    const h = date.getHours();
+    const m = date.getMinutes();
+    const s = date.getSeconds();
+    return `${h}:${m}:${s}`;
+  }
+
+  setStatus(state) {
+    const now = new Date();
+    const time = this.timeString(now);
+    this.status = `${state} @ ${time}`;
+  }
+
   getFile() {
     this.fs.getFile(this.filename)
       .subscribe(
@@ -72,6 +86,7 @@ export class EditorComponent implements OnInit {
     this.fs.putFile(this.filename, this.filedata)
       .subscribe(
         success => {
+            this.setStatus('saved');
             if (reload) {
                 this.reload(500);
             }
