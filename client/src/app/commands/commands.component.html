@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-title>commands</mat-card-title>
   <mat-card-subtitle>
-    <input size="120" [(ngModel)]="cmd" autofocus>
+    <input size="120" [(ngModel)]="cmd" (keyup.enter)="run()" autofocus>
     <button mat-button (click)="run()">Go</button>
   </mat-card-subtitle>
   <mat-card-content>
