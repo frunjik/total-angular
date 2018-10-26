@@ -36,7 +36,8 @@ function getFolders() {
 			if(isDirectory) {
 				return (!filename.endsWith('.git') && filename.indexOf('node_modules') === -1);
 			}
-			return U.getName(filename).indexOf(pathname) !== -1;
+            // return U.getName(filename).indexOf(pathname) !== -1;
+            return filename.indexOf(pathname) !== -1;
 		}
 	);
 }
