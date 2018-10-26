@@ -3,11 +3,7 @@ import { CameraControls } from './cameracontrols';
 import { Keyboard, Mouse } from './input';
 import { grassVertexShader, 
     grassFragmentShader, 
-    sobelFragmentShader, 
-    contourFragmentShader, 
-    blackFragmentShader, 
-    starFragmentShader,
-    cosFragmentShader } from './shaders';
+} from './shaders';
 
 export class Game  {
   private w = 640 * 1.5;
@@ -60,60 +56,6 @@ export class Game  {
     return this.getorset(this.shaders, name, s);
   }
 
-  createOrbiter() {
-
-    const x = 4, z = 4, y = 1;
-    const w = 0.4, h = 20, o = 0.1;
-
-    let box = new THREE.BoxBufferGeometry( 1, 1, 1 );
-    // let xaxis = new THREE.BoxBufferGeometry( h, w, w );
-    // let yaxis = new THREE.BoxBufferGeometry( w, h, w );
-    // let zaxis = new THREE.BoxBufferGeometry( w, w, h );
-    let material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
-    let red = new THREE.MeshBasicMaterial( {color: 0xff0000} );
-    let green = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
-    let blue = new THREE.MeshBasicMaterial( {color: 0x0000ff} );
-
-    let cubeA = new THREE.Mesh( box, red );
-    cubeA.position.set( x+(h/2)+o, y+0, z+0 );
-    cubeA.scale.x = h;
-    cubeA.scale.y = w;
-    cubeA.scale.z = w;
-    cubeA.name = 'red';
-
-    // let cubeX = new THREE.Mesh( box, this.shader('contour') );
-    // cubeX.position.set( x+0.5, y+(h/2)+o, z+0.5 );
-    // cubeX.scale.x = w+0.3;
-    // cubeX.scale.y = h+0.3;
-    // cubeX.scale.z = w+0.3;
-    // cubeX.name = 'greenX';
-
-    let cubeB = new THREE.Mesh( box, green );
-    cubeB.position.set( x+0, y+(h/2)+o, z+0 );
-    cubeB.scale.x = w;
-    cubeB.scale.y = h;
-    cubeB.scale.z = w;
-    cubeB.name = 'green';
-
-
-    // let cubeC = new THREE.Mesh( box, blue );
-    let cubeC = new THREE.Mesh( box, this.shader('cos') );
-    cubeC.position.set( x+0, y+0, z+(h/2)+o );
-    cubeC.scale.x = w;
-    cubeC.scale.y = w;
-    cubeC.scale.z = h;
-    cubeC.name = 'blue';
-
-    //create a group and add the three axis
-    let group = new THREE.Group();
-    group.add( cubeA );
-    group.add( cubeB );
-    group.add( cubeC );
-    // group.add( cubeX );
-
-    return group;
-  }
-
   createGrassShader() {
     const w = 120;
     const h = 120;
@@ -127,42 +69,15 @@ export class Game  {
     } );
   }
 
-  createShader(fs) {
-    const w = 120;
-    const h = 120;
-    return new THREE.ShaderMaterial( {
-        uniforms: {
-            time: { value: (new Date()).getMilliseconds() },
-            resolution: { value: new THREE.Vector2(w, h) }
-        },
-        vertexShader: grassVertexShader,
-        fragmentShader: fs
-    } );
-  }
-
   create() {
-    this.shader('star', this.createShader(starFragmentShader));
-    this.shader('BLACK', this.createShader(blackFragmentShader));
-    this.shader('sobel', this.createShader(sobelFragmentShader));
-    // this.shader('contour', this.createShader(contourFragmentShader));
-    this.shader('cos', this.createShader(cosFragmentShader));
-
     this.sensitivity = 0.01;
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(75, this.w / this.h, 0.1, 1000);
 
-    const away = 6;
-    this.camera.position.x = 10 * away;  
-    this.camera.position.y = 13 * away;  
-    this.camera.position.z = -6 * away;  
-
-    /*
-0x224c1a	(34,76,26)
-0x505f20	(80,95,32)
-0x15a447	(21,164,71)
-0x40aeca	(64,174,202)
-0xb9bcff	(185,188,255)
-    */
+    const away = 15;
+    this.camera.position.x =  0 * away;  
+    this.camera.position.y =  3 * away;  
+    this.camera.position.z =  1 * away;  
 
     var geometry = new THREE.BoxGeometry(1, 1, 1);
     this.geometry('cube', geometry);
@@ -186,27 +101,25 @@ export class Game  {
 
     this.floor = new THREE.Mesh(geometry, this.grass);
     this.floor.position.y = -0.5;
-    this.floor.scale.z = 150;  
-    this.floor.scale.x = 150;  
+
+    const s = 10;
+    const w = 4;
+    const h = 5;
+
+    this.floor.scale.z = s * h;  
+    this.floor.scale.x = s * w;  
     this.floor.scale.y = 1;  
     this.floor.name = 'floor';  
     this.scene.add(this.floor);
-    this.scene.add(this.createOrbiter());
 
     this.camera.lookAt(this.cube.position);
 
     this.raycaster = new THREE.Raycaster();
-    //mouse = new THREE.Vector2();    
-    
-
-    console.log(this.shaders);
   }
 
   init(canvas) {
     this.canvas = canvas;
-
     this.bounds = this.canvas.getBoundingClientRect();
-    
     this.canvas.width = this.w;
     this.canvas.height = this.h;
     this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas } );
@@ -241,10 +154,7 @@ export class Game  {
       while(this.scene.children.length > 0){ 
         this.scene.remove(this.scene.children[0]);
       }
-    //   this.scene.remove(this.cube);
-    //   this.scene.remove(this.floor);
-    //   this.scene.remove(this.light);
-    //   this.scene.remove(this.directionalLight);
+
       this.cube = null;
       this.floor = null;
       this.light = null;
@@ -260,28 +170,13 @@ export class Game  {
  }
 
   loop(now = 0) {
-    // if (now - this.ticks> 3000) {
-    //     this.grass.needsUpdate = true;
-    //     this.grass.uniforms.time.value = ((now % 100) * 100);
-    //     this.ticks = now;
-
-    // //     console.log(this.grass.uniforms.time.value);
-    // }
-
-const s = this.shader('cos');
-// console.log('S', s);
-    s.uniforms.time.value = ((now/5000) % 100) / 100;
-    s.needsUpdate = true;
-
-
-
-    // this.raycaster = new THREE.Raycaster();
-	// 			mouse = new THREE.Vector2();
+    // const s = this.shader('cos');
+    // s.uniforms.time.value = ((now/5000) % 100) / 100;
+    // s.needsUpdate = true;
 
     // this.raycaster.setFromCamera(this.mouse.position, this.camera);
     this.raycaster.setFromCamera({x: this.mx, y: this.my}, this.camera);
 	var intersects = this.raycaster.intersectObject(this.scene, true);
-
 
     let f = intersects.find(i => i.object.name === 'floor');
     if (f) {
@@ -294,8 +189,6 @@ const s = this.shader('cos');
     if (intersects.length) {
         intersects.forEach(i => console.log(i.object.name));
     }
-
-
 
     this.renderer.render(this.scene, this.camera);
     this.raf = requestAnimationFrame((now) => {

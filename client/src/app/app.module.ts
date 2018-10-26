@@ -47,7 +47,7 @@ const routes: Routes = [
     // redirectTo: app.default,
     // pathMatch: 'full'
     // @TODO respect app.default
-    component: CurrentComponent
+    component: Wp3Component
   },
   { path: '**', component: PagenotfoundComponent }
 ];
