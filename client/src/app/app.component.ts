@@ -11,4 +11,11 @@ export class AppComponent {
   get pages() {
     return app.parts.filter(part => (false !== part.menu) && 'page' === part.kind);
   }
+ 
+  goBack() {
+    window.history.back();
+  }
+  goForward() {
+    window.history.forward();
+  }
 }

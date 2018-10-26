@@ -42,8 +42,10 @@ const routes: Routes = [
   { path: 'woodpusher', component: WoodpusherComponent },
   { path: 'shader-builder', component: ShaderBuilderComponent },
   { path: '',
-    redirectTo: app.default,
-    pathMatch: 'full'
+    // redirectTo: app.default,
+    // pathMatch: 'full'
+    // @TODO respect app.default
+    component: CurrentComponent
   },
   { path: '**', component: PagenotfoundComponent }
 ];

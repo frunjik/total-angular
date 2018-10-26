@@ -9,6 +9,12 @@
 
     <span class="fill-remaining-space"></span>
     <span>
+        <button mat-icon-button (click)="goBack()">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+        </button>
+        <button mat-icon-button (click)="goForward()">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+        </button>
         <a mat-icon-button href="http://localhost:8000/index.html" queryParamsHandling preserveFragment>
             <mat-icon>cached</mat-icon>
         </a>
