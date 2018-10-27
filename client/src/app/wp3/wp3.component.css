@@ -2,12 +2,17 @@
   display:flex;
 }
 
+.col {
+  display:flex;
+  flex-direction: column;
+}
+
 .big {
-  flex: 5 0 0;
+  flex: 1 0 0;
 }
 
 .small {
-  flex: 4 0 0; 
+  flex: 2 0 0; 
 }
 
 x-canvas {
