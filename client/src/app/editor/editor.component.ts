@@ -88,7 +88,7 @@ export class EditorComponent implements OnInit {
         success => {
             this.setStatus('saved');
             if (reload) {
-                this.reload(500);
+                this.reload(800);
             }
         },
         failure => {}
