@@ -1,33 +1,38 @@
-<span *ngIf="page">
-    PAGE
-    <button (click)="editor.openFile(pagenameTS)" mat-icon-button>
-        <mat-icon>view_quilt</mat-icon>
-    </button>
-    <button (click)="editor.openFile(pagenameHTML)" mat-icon-button>
-        <mat-icon>view_stream</mat-icon>
-    </button>
-    <button (click)="editor.openFile(pagenameCSS)" mat-icon-button>
-        <mat-icon>view_module</mat-icon>
-    </button>
+<app-editor #editor height="{{height}}" loadfile="{{filename}}">
+    
+    <!-- toolbar of editor -->
+    <span *ngIf="page">
+        PAGE
+        <button (click)="editor.openFile(pagenameTS)" mat-icon-button>
+            <mat-icon>view_quilt</mat-icon>
+        </button>
+        <button (click)="editor.openFile(pagenameHTML)" mat-icon-button>
+            <mat-icon>view_stream</mat-icon>
+        </button>
+        <button (click)="editor.openFile(pagenameCSS)" mat-icon-button>
+            <mat-icon>view_module</mat-icon>
+        </button>
+        <ng-content></ng-content>
+    </span>
+    <span *ngIf="component">
+        COMP
+        <button (click)="editor.openFile(componentnameTS)" mat-icon-button>
+            <mat-icon>view_quilt</mat-icon>
+        </button>
+        <button (click)="editor.openFile(componentnameHTML)" mat-icon-button>
+            <mat-icon>view_stream</mat-icon>
+        </button>
+        <button (click)="editor.openFile(componentnameCSS)" mat-icon-button>
+            <mat-icon>view_module</mat-icon>
+        </button>
+        <ng-content></ng-content>
+    </span>
+    <span *ngIf="file">
+        FILE
+        <button (click)="editor.openFile(file)" mat-icon-button>
+            <mat-icon>view_quilt</mat-icon>
+        </button>
+    </span>
     <ng-content></ng-content>
-</span>
-<span *ngIf="component">
-    COMP
-    <button (click)="editor.openFile(componentnameTS)" mat-icon-button>
-        <mat-icon>view_quilt</mat-icon>
-    </button>
-    <button (click)="editor.openFile(componentnameHTML)" mat-icon-button>
-        <mat-icon>view_stream</mat-icon>
-    </button>
-    <button (click)="editor.openFile(componentnameCSS)" mat-icon-button>
-        <mat-icon>view_module</mat-icon>
-    </button>
-    <ng-content></ng-content>
-</span>
-<span *ngIf="file">
-    FILE
-    <button (click)="editor.openFile(file)" mat-icon-button>
-        <mat-icon>view_quilt</mat-icon>
-    </button>
-</span>
-<app-editor #editor height="{{height}}" loadfile="{{filename}}"></app-editor>
+
+</app-editor>
