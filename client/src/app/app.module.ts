@@ -29,6 +29,8 @@ import { EditThisComponent } from './components/edit-this/edit-this.component';
 import { EditLinksComponent } from './components/edit-links/edit-links.component';
 import { CanvasComponent } from './components/canvas/canvas.component';
 import { FindFileComponent } from './components/find-file/find-file.component';
+import { PropertyEditorComponent } from './components/property-editor/property-editor.component';
+import { ObjectEditorComponent } from './components/object-editor/object-editor.component';
 
 import { app } from './app';
 
@@ -47,7 +49,7 @@ const routes: Routes = [
     // redirectTo: app.default,
     // pathMatch: 'full'
     // @TODO respect app.default
-    component: Wp3Component
+    component: CurrentComponent
   },
   { path: '**', component: PagenotfoundComponent }
 ];
@@ -67,6 +69,8 @@ const routes: Routes = [
     EditLinksComponent,
     EditThisComponent,
     FindFileComponent,
+    PropertyEditorComponent,
+    ObjectEditorComponent,
     CanvasComponent,
     ShaderBuilderComponent,
     ThreejsComponent,

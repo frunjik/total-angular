@@ -1,0 +1,10 @@
+<p>
+  object-editor works!
+</p>
+
+<form>
+    <app-property-editor 
+    *ngFor="let accessor of accessors"
+    [model]="model" accessor="{{accessor}}">
+    </app-property-editor>
+</form>

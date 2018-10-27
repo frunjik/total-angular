@@ -62,6 +62,8 @@ export const app = {
         },
         component('find-file'),
         component('canvas'),
+        component('property-editor'),
+        component('object-editor'),
         component('edit-links'),
         component('edit-this'),
         { 

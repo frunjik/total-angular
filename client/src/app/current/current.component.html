@@ -1,10 +1,10 @@
 <div class="row">
 
 <div class="small">
-<app-woodpusher></app-woodpusher>
+<app-property-editor [model]="test" accessor="a"></app-property-editor>
+<app-object-editor [model]="test"></app-object-editor>
 </div>
 
 <div class="big">
-<app-edit-this height="640px" page="woodpusher" file="client/src/app/current/current.component.html"></app-edit-this>
-
+<app-edit-this height="640px" component="property-editor" file="client/src/app/current/current.component.html"></app-edit-this>
 </div>
