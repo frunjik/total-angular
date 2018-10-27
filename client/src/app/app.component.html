@@ -1,5 +1,5 @@
 
-<mat-toolbar no-color="warn">
+<mat-toolbar no-color="warn" class="small-toolbar">
     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="14" height="24">
     <path class="path" fill="none" stroke="darkgray" stroke-width="4" stroke-miterlimit="0" 
     d="M 2 2 L 7 12 L 2 22"
@@ -21,7 +21,7 @@
     </span>
 </mat-toolbar>
 
-<mat-toolbar>
+<mat-toolbar class="small-toolbar">
     <span>
         <button *ngFor="let page of pages" mat-button [routerLink]="[page.title]" queryParamsHandling preserveFragment>
             {{page.title}}
