@@ -1,7 +1,4 @@
-import * as THREE from 'three';
 import { Component, ElementRef, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
-import { CameraControls } from './cameracontrols';
-import { Keyboard, Mouse } from './input';
 import { Game } from './game';
 
 @Component({
