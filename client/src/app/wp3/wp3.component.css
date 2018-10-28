@@ -1,10 +1,10 @@
-.row {
+.col {
   display:flex;
 }
 
-.col {
+.row {
   display:flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 
 .big {
