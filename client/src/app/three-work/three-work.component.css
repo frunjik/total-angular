@@ -1,0 +1,26 @@
+.col {
+  display:flex;
+}
+
+.row {
+  display:flex;
+  flex-direction: row;
+}
+
+.big {
+  flex: 1 0 0;
+}
+
+.small {
+  flex: 2 0 0; 
+}
+
+x-canvas {
+    width: 100%; 
+    height: 100%;
+    background: lightblue;
+}
+
+canvas { 
+    background: lightblue;
+}
