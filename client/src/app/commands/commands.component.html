@@ -17,9 +17,9 @@
     <button mat-button (click)="run('git status');">git status</button>
     <button mat-button (click)="run('git --no-pager diff --name-only');">git diff name</button>
     <button mat-button (click)="run('git --no-pager diff');">git diff</button>
+    <button mat-button (click)="run('git branch');">git branch</button>
     <button mat-button (click)="setCmd = 'git checkout -b '">git checkout -b ...</button>
     <button mat-button (click)="setCmd = 'git add '">git add ...</button>
-    <button mat-button (click)="run('git branch');">git branch</button>
     <button mat-button (click)='gitCommit()'>git commit</button>
     <button mat-button (click)="setCmd = 'ng generate '">ng generate ...</button>
     <button mat-button (click)="setCmd = 'ng help generate'">ng help generate</button>
