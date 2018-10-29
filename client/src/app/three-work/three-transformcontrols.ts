@@ -99,6 +99,13 @@ export function TransformControls( camera, domElement ) {
 	defineProperty( "rotationAngle", rotationAngle );
 	defineProperty( "eye", eye );
 
+
+	// @TODO
+	this.onMouseDown 	= (event) => onPointerDown(event);
+	this.onMouseMove 	= (event) => onPointerMove(event);	// @TODO: calling Hover
+	this.onMouseUp   	= (event) => onPointerUp(event);
+	this.onContextMenu	= (event) => onContext(event);
+
 	this.addEventListeners = function () {
 		domElement.addEventListener( "mousedown", onPointerDown, false );
 		domElement.addEventListener( "touchstart", onPointerDown, false );
@@ -126,7 +133,7 @@ export function TransformControls( camera, domElement ) {
 		// domElement.removeEventListener( "touchcancel", onPointerUp );
 		// domElement.removeEventListener( "touchleave", onPointerUp );
 		// domElement.removeEventListener( "contextmenu", onContext );
-		this.removeEventListeners();
+		// this.removeEventListeners();
 	};
 
 	this.removeEventListeners = function () {
@@ -305,10 +312,16 @@ export function TransformControls( camera, domElement ) {
 
 	this.pointerMove = function( pointer ) {
 
+		// @JVH: Safe to call - since checking state in pointerMove ? - sets.this.axis
+		scope.pointerHover(pointer);		// @JVH
+
 		var axis = this.axis;
 		var mode = this.mode;
 		var object = this.object;
 		var space = this.space;
+
+		// @JVH: Moved up
+		if ( object === undefined || axis === null || this.dragging === false || ( pointer.button !== undefined && pointer.button !== 0 ) ) return;
 
 		if ( mode === 'scale') {
 
@@ -320,7 +333,7 @@ export function TransformControls( camera, domElement ) {
 
 		}
 
-		if ( object === undefined || axis === null || this.dragging === false || ( pointer.button !== undefined && pointer.button !== 0 ) ) return;
+		// if ( object === undefined || axis === null || this.dragging === false || ( pointer.button !== undefined && pointer.button !== 0 ) ) return;
 
 		ray.setFromCamera( pointer, this.camera );
 
@@ -550,7 +563,7 @@ export function TransformControls( camera, domElement ) {
 
 		if ( !scope.enabled ) return;
 
-		event.preventDefault();
+		// event.preventDefault();
 
 		scope.pointerHover( getPointer( event ) );
 		scope.pointerDown( getPointer( event ) );
@@ -561,7 +574,7 @@ export function TransformControls( camera, domElement ) {
 
 		if ( !scope.enabled ) return;
 
-		event.preventDefault();
+		// event.preventDefault();
 
 		scope.pointerMove( getPointer( event ) );
 
@@ -571,7 +584,7 @@ export function TransformControls( camera, domElement ) {
 
 		if ( !scope.enabled ) return;
 
-		event.preventDefault(); // Prevent MouseEvent on mobile
+		// event.preventDefault(); // Prevent MouseEvent on mobile
 
 		scope.pointerUp( getPointer( event ) );
 

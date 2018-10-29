@@ -52,7 +52,10 @@ export class Game extends Engine {
     blocks = [];
     board = new Board();
     controls;
-    transformer;
+    editControls;
+    transformControls;
+
+    ctrl;
 
     createShapes() {
         this.geometry('red', new THREE.BoxGeometry(this.s * 2, 1, this.s * 2));
@@ -102,29 +105,31 @@ export class Game extends Engine {
 
     init(canvas) {
         super.init(canvas);
-        this.controls = new EditorControls(this.camera, this.canvas);
-        this.controls.enabled = false;
+        this.editControls = new EditorControls(this.camera, this.canvas);
+        this.editControls.enabled = true;
 
-        this.transformer = new TransformControls(this.camera, this.canvas);
-        this.transformer.size = 3;
-        this.transformer.attach(this.blocks[1]);
-        this.transformer.enabled = true;
-        // this.transformer.addEventListeners();
-        this.scene.add(this.transformer);
+        this.transformControls = new TransformControls(this.camera, this.canvas);
+        this.transformControls.size = 3;
+        this.transformControls.attach(this.blocks[1]);
+        this.transformControls.enabled = true;
+        // this.transformControls.addEventListeners();
+        this.scene.add(this.transformControls);
+
+        this.controls = this.transformControls;
 
         this.start();
     }
 
     exit() {
         this.stop();
-        this.controls.dispose();
         this.controls = null;
+        this.editControls.dispose();
+        this.editControls = null;
         // this.transformer.removeEventListeners();
-        this.scene.remove(this.transformer);
-        this.transformer.enabled = false;
-        this.transformer.detach(this.blocks[1]);
-        this.transformer.dispose();
-        this.transformer = null;
+        this.scene.remove(this.transformControls);
+        this.transformControls.detach(this.blocks[1]);
+        this.transformControls.dispose();
+        this.transformControls = null;
         super.exit();
     }
 
@@ -140,22 +145,65 @@ export class Game extends Engine {
        super.destroy();
     }
 
-    enableWorldControls(f) {
-        // this.controls.enabled = f;
-        // this.transformer.enabled = !f;
+    enableEditControls() {
+        this.controls = this.editControls;
     }
 
+    enableTransformControls() {
+        this.controls = this.transformControls;
+    }
+
+    onEvent(event, handler) {
+// console.log('EVENT', handler, event);
+        const controls = this.controls;
+        if (controls && controls[handler]) {
+// console.log('ROUTED', handler, event, this.controls);
+            controls[handler](event);
+        }
+    }
+
+    onMouseEnter(event) {
+        this.onEvent(event, 'onMouseEnter');
+    }
+    onMouseLeave(event){
+        this.onEvent(event, 'onMouseLeave');
+    }
+    onMouseMove(event){
+        this.onEvent(event, 'onMouseMove');
+    }
+    onMouseDown(event){
+        this.onEvent(event, 'onMouseDown');
+    }
+    onMouseUp(event) {
+        this.onEvent(event, 'onMouseUp');
+    }
     onKeyDown(event) {
-      if (event.key === "Control") {
-          this.enableWorldControls(true);
-      }
-    }
-
+        if ('Control' === event.key && !this.ctrl) {
+// console.log('CTRL.D');            
+            this.enableEditControls();
+            this.ctrl = true;
+        }
+        this.onEvent(event, 'onKeyDown');
+}
     onKeyUp(event) {
-      if (event.key === "Control") {
-        this.enableWorldControls(false);
-      }
+        if ('Control' === event.key && this.ctrl) {
+// console.log('CTRL.U');            
+            this.enableTransformControls();
+            this.ctrl = false;
+        }
+        this.onEvent(event, 'onKeyUp');
     }
-   
+    onMouseWheel(event) {
+        this.onEvent(event, 'onMouseWheel');
+    }
+    onClick(event) {
+        this.onEvent(event, 'onClick');
+    }
+    onDblClick(event) {
+        this.onEvent(event, 'onDblClick');
+    }
+    onContextMenu(event) {
+        this.onEvent(event, 'onContextMenu');
+    }
 }
  

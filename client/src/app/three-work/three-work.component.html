@@ -1,11 +1,19 @@
-<div class="col">
-
+<div class="col"
+>
 <div class="big">
     <canvas #scene
     tabindex="1"
-
-    (keydown)="onKeyDownEvent($event)"
-    (keyup)="onKeyUpEvent($event)"
+    (keydown)="game.onKeyDown($event)"
+    (keyup)="game.onKeyUp($event)"
+    (mouseenter)="game.onMouseEnter($event)"
+    (mouseleave)="game.onMouseLeave($event)"
+    (mousemove)="game.onMouseMove($event)"
+    (mousedown)="game.onMouseDown($event)"
+    (mouseup)="game.onMouseUp($event)"
+    on-wheel="game.onMouseWheel($event)"
+    on-click="game.onClick($event)"
+    on-dblclick="game.onDblClick($event)"
+    on-contextmenu="game.onContextMenu($event)"
     >
     </canvas>
 </div>
@@ -16,5 +24,4 @@
     <app-edit-this height="920px" width="100%" file="client/src/app/three-work/engine.ts" class="small">
     </app-edit-this>
 </div>
-
 </div>

@@ -122,6 +122,8 @@ export function EditorControls( object, domElement ) {
 
 	// mouse
 
+	this.onMouseDown = (event) => onMouseDown(event);
+
 	function onMouseDown( event ) {
 
 		if ( scope.enabled === false ) return;
@@ -142,12 +144,14 @@ export function EditorControls( object, domElement ) {
 
 		pointerOld.set( event.clientX, event.clientY );
 
-		domElement.addEventListener( 'mousemove', onMouseMove, false );
-		domElement.addEventListener( 'mouseup', onMouseUp, false );
-		domElement.addEventListener( 'mouseout', onMouseUp, false );
-		domElement.addEventListener( 'dblclick', onMouseUp, false );
+		// domElement.addEventListener( 'mousemove', onMouseMove, false );
+		// domElement.addEventListener( 'mouseup', onMouseUp, false );
+		// domElement.addEventListener( 'mouseout', onMouseUp, false );
+		// domElement.addEventListener( 'dblclick', onMouseUp, false );
 
 	}
+
+	this.onMouseMove = (event) => onMouseMove(event);
 
 	function onMouseMove( event ) {
 
@@ -176,16 +180,21 @@ export function EditorControls( object, domElement ) {
 
 	}
 
+
+	this.onMouseUp = (event) => onMouseUp(event);
+
 	function onMouseUp( event ) {
 
-		domElement.removeEventListener( 'mousemove', onMouseMove, false );
-		domElement.removeEventListener( 'mouseup', onMouseUp, false );
-		domElement.removeEventListener( 'mouseout', onMouseUp, false );
-		domElement.removeEventListener( 'dblclick', onMouseUp, false );
+		// domElement.removeEventListener( 'mousemove', onMouseMove, false );
+		// domElement.removeEventListener( 'mouseup', onMouseUp, false );
+		// domElement.removeEventListener( 'mouseout', onMouseUp, false );
+		// domElement.removeEventListener( 'dblclick', onMouseUp, false );
 
 		state = STATE.NONE;
 
 	}
+
+	this.onMouseWheel = (event) => onMouseWheel(event);
 
 	function onMouseWheel( event ) {
 
@@ -196,6 +205,8 @@ export function EditorControls( object, domElement ) {
 
 	}
 
+	this.onContextMenu = (event) => contextmenu(event);
+	
 	function contextmenu( event ) {
 
 		event.preventDefault();
@@ -204,16 +215,16 @@ export function EditorControls( object, domElement ) {
 
 	this.dispose = function () {
 
-		domElement.removeEventListener( 'contextmenu', contextmenu, false );
-		domElement.removeEventListener( 'mousedown', onMouseDown, false );
-		domElement.removeEventListener( 'wheel', onMouseWheel, false );
-		domElement.removeEventListener( 'touchstart', touchStart, false );
-		domElement.removeEventListener( 'touchmove', touchMove, false );
+		// domElement.removeEventListener( 'contextmenu', contextmenu, false );
+		// domElement.removeEventListener( 'mousedown', onMouseDown, false );
+		// domElement.removeEventListener( 'wheel', onMouseWheel, false );
+		// domElement.removeEventListener( 'touchstart', touchStart, false );
+		// domElement.removeEventListener( 'touchmove', touchMove, false );
 
-		domElement.removeEventListener( 'mousemove', onMouseMove, false );
-		domElement.removeEventListener( 'mouseup', onMouseUp, false );
-		domElement.removeEventListener( 'mouseout', onMouseUp, false );
-		domElement.removeEventListener( 'dblclick', onMouseUp, false );
+		// domElement.removeEventListener( 'mousemove', onMouseMove, false );
+		// domElement.removeEventListener( 'mouseup', onMouseUp, false );
+		// domElement.removeEventListener( 'mouseout', onMouseUp, false );
+		// domElement.removeEventListener( 'dblclick', onMouseUp, false );
 	};
 
 	// touch
