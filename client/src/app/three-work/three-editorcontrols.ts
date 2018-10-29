@@ -207,20 +207,14 @@ export function EditorControls( object, domElement ) {
 		domElement.removeEventListener( 'contextmenu', contextmenu, false );
 		domElement.removeEventListener( 'mousedown', onMouseDown, false );
 		domElement.removeEventListener( 'wheel', onMouseWheel, false );
+		domElement.removeEventListener( 'touchstart', touchStart, false );
+		domElement.removeEventListener( 'touchmove', touchMove, false );
 
 		domElement.removeEventListener( 'mousemove', onMouseMove, false );
 		domElement.removeEventListener( 'mouseup', onMouseUp, false );
 		domElement.removeEventListener( 'mouseout', onMouseUp, false );
 		domElement.removeEventListener( 'dblclick', onMouseUp, false );
-
-		domElement.removeEventListener( 'touchstart', touchStart, false );
-		domElement.removeEventListener( 'touchmove', touchMove, false );
-
 	};
-
-	domElement.addEventListener( 'contextmenu', contextmenu, false );
-	domElement.addEventListener( 'mousedown', onMouseDown, false );
-	domElement.addEventListener( 'wheel', onMouseWheel, false );
 
 	// touch
 
@@ -307,9 +301,21 @@ export function EditorControls( object, domElement ) {
 
 	}
 
-	domElement.addEventListener( 'touchstart', touchStart, false );
-	domElement.addEventListener( 'touchmove', touchMove, false );
+	this.addEventListeners = function () {
+		domElement.addEventListener( 'contextmenu', contextmenu, false );
+		domElement.addEventListener( 'mousedown', onMouseDown, false );
+		domElement.addEventListener( 'wheel', onMouseWheel, false );
+		domElement.addEventListener( 'touchstart', touchStart, false );
+		domElement.addEventListener( 'touchmove', touchMove, false );
+	};
 
+	this.removeEventListeners = function () {
+		domElement.removeEventListener( 'contextmenu', contextmenu, false );
+		domElement.removeEventListener( 'mousedown', onMouseDown, false );
+		domElement.removeEventListener( 'wheel', onMouseWheel, false );
+		domElement.removeEventListener( 'touchstart', touchStart, false );
+		domElement.removeEventListener( 'touchmove', touchMove, false );
+	};
 };
 
 EditorControls.prototype = Object.create( THREE.EventDispatcher.prototype );

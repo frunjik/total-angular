@@ -1,7 +1,12 @@
 <div class="col">
 
 <div class="big">
-    <canvas #scene>
+    <canvas #scene
+    tabindex="1"
+
+    (keydown)="onKeyDownEvent($event)"
+    (keyup)="onKeyUpEvent($event)"
+    >
     </canvas>
 </div>
 

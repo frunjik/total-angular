@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { Engine } from './engine';
 import { EditorControls } from './three-editorcontrols';
+import { TransformControls } from './three-transformcontrols';
 
 class Piece {
     x;
@@ -50,6 +51,8 @@ export class Game extends Engine {
     position = new THREE.Vector3(-15, 1, -20);
     blocks = [];
     board = new Board();
+    controls;
+    transformer;
 
     createShapes() {
         this.geometry('red', new THREE.BoxGeometry(this.s * 2, 1, this.s * 2));
@@ -92,9 +95,23 @@ export class Game extends Engine {
         this.board.pieces.forEach(p => this.createBlockFromPiece(p));
     }
 
+    loop(now) {
+        // this.transformer.updateMatrixWorld();
+        super.loop(now);
+    }
+
     init(canvas) {
         super.init(canvas);
         this.controls = new EditorControls(this.camera, this.canvas);
+        this.controls.enabled = false;
+
+        this.transformer = new TransformControls(this.camera, this.canvas);
+        this.transformer.size = 3;
+        this.transformer.attach(this.blocks[1]);
+        this.transformer.enabled = true;
+        // this.transformer.addEventListeners();
+        this.scene.add(this.transformer);
+
         this.start();
     }
 
@@ -102,6 +119,12 @@ export class Game extends Engine {
         this.stop();
         this.controls.dispose();
         this.controls = null;
+        // this.transformer.removeEventListeners();
+        this.scene.remove(this.transformer);
+        this.transformer.enabled = false;
+        this.transformer.detach(this.blocks[1]);
+        this.transformer.dispose();
+        this.transformer = null;
         super.exit();
     }
 
@@ -116,5 +139,23 @@ export class Game extends Engine {
        this.blocks = [];
        super.destroy();
     }
+
+    enableWorldControls(f) {
+        // this.controls.enabled = f;
+        // this.transformer.enabled = !f;
+    }
+
+    onKeyDown(event) {
+      if (event.key === "Control") {
+          this.enableWorldControls(true);
+      }
+    }
+
+    onKeyUp(event) {
+      if (event.key === "Control") {
+        this.enableWorldControls(false);
+      }
+    }
+   
 }
  

@@ -25,4 +25,14 @@ export class ThreeWorkComponent implements OnInit, AfterViewInit, OnDestroy {
     this.game.destroy();
     this.game = null;
   }
+
+  onKeyDownEvent(event) {
+console.log(event);      
+    this.game.onKeyDown(event);
+  }
+
+  onKeyUpEvent(event) {
+console.log(event);      
+    this.game.onKeyUp(event);
+  }
 }
