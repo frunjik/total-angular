@@ -16,6 +16,14 @@
     on-contextmenu="game.onContextMenu($event)"
     >
     </canvas>
+
+
+    <div>
+        ({{game.camera.position.x}}, {{game.camera.position.y}}, {{game.camera.position.z}})
+    </div>
+    <div>
+        ({{game.camera.quaternion.x}}, {{game.camera.quaternion.y}}, {{game.camera.quaternion.z}}, {{game.camera.quaternion.w}})
+    </div>
 </div>
 
 <div class="row small">

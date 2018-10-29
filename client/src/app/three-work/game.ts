@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { Engine } from './engine';
 import { EditorControls } from './three-editorcontrols';
 import { TransformControls } from './three-transformcontrols';
+import { FirstPersonControls } from './three-firstpersoncontrols';
 
 class Piece {
     x;
@@ -54,6 +55,9 @@ export class Game extends Engine {
     controls;
     editControls;
     transformControls;
+    firstPersonControls;
+
+    lastNow = 0;
 
     ctrl;
 
@@ -99,12 +103,19 @@ export class Game extends Engine {
     }
 
     loop(now) {
-        // this.transformer.updateMatrixWorld();
-        super.loop(now);
+        const delta = Math.max(now - this.lastNow, 1);
+        this.lastNow = now;
+        if (this.controls && this.controls.update) {
+            this.controls.update(delta);
+        }
+        super.loop(delta);
     }
 
     init(canvas) {
         super.init(canvas);
+
+        this.firstPersonControls = new FirstPersonControls(this.camera, this.canvas);
+
         this.editControls = new EditorControls(this.camera, this.canvas);
         this.editControls.enabled = true;
 
@@ -112,10 +123,10 @@ export class Game extends Engine {
         this.transformControls.size = 3;
         this.transformControls.attach(this.blocks[1]);
         this.transformControls.enabled = true;
-        // this.transformControls.addEventListeners();
         this.scene.add(this.transformControls);
 
         this.controls = this.transformControls;
+        // this.controls = this.firstPersonControls;
 
         this.start();
     }
@@ -123,9 +134,10 @@ export class Game extends Engine {
     exit() {
         this.stop();
         this.controls = null;
+        this.firstPersonControls.dispose();
+        this.firstPersonControls = null;
         this.editControls.dispose();
         this.editControls = null;
-        // this.transformer.removeEventListeners();
         this.scene.remove(this.transformControls);
         this.transformControls.detach(this.blocks[1]);
         this.transformControls.dispose();
@@ -148,16 +160,15 @@ export class Game extends Engine {
     enableEditControls() {
         this.controls = this.editControls;
     }
-
+    
     enableTransformControls() {
+        // this.controls = this.firstPersonControls;
         this.controls = this.transformControls;
     }
 
     onEvent(event, handler) {
-// console.log('EVENT', handler, event);
         const controls = this.controls;
         if (controls && controls[handler]) {
-// console.log('ROUTED', handler, event, this.controls);
             controls[handler](event);
         }
     }
@@ -179,15 +190,13 @@ export class Game extends Engine {
     }
     onKeyDown(event) {
         if ('Control' === event.key && !this.ctrl) {
-// console.log('CTRL.D');            
             this.enableEditControls();
             this.ctrl = true;
         }
         this.onEvent(event, 'onKeyDown');
-}
+    }
     onKeyUp(event) {
         if ('Control' === event.key && this.ctrl) {
-// console.log('CTRL.U');            
             this.enableTransformControls();
             this.ctrl = false;
         }
