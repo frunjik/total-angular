@@ -105,6 +105,22 @@ export function TransformControls( camera, domElement ) {
 	this.onMouseMove 	= (event) => onPointerMove(event);	// @TODO: calling Hover
 	this.onMouseUp   	= (event) => onPointerUp(event);
 	this.onContextMenu	= (event) => onContext(event);
+	this.onKeyDown		= (event) => {
+		switch(event.key) {
+			case 'r':
+			case 'R':
+				this.mode = 'rotate';
+				break;
+			case 't':
+			case 'T':
+				this.mode = 'translate';
+				break;
+			case 's':
+			case 'S':
+				this.mode = 'scale';
+				break;
+		}
+	}
 
 	this.addEventListeners = function () {
 		domElement.addEventListener( "mousedown", onPointerDown, false );
