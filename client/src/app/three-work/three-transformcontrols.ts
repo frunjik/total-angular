@@ -644,11 +644,11 @@ export function TransformControls( camera, domElement ) {
 
 	};
 
-	this.update = function () {
+	// this.update = function () {
 
-		console.warn( 'THREE.TransformControls: update function has been depricated.' );
+	// 	console.warn( 'THREE.TransformControls: update function has been deprecated.' );
 
-	};
+	// };
 
 };
 
