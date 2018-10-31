@@ -3,48 +3,7 @@ import { Engine } from './engine';
 import { EditorControls } from './three-editorcontrols';
 import { TransformControls } from './three-transformcontrols';
 import { FirstPersonControls } from './three-firstpersoncontrols';
-
-class Piece {
-    x;
-    y;
-    width;
-    height;
-    color;
-    constructor(c, x, y, w, h) {
-        this.x = x;
-        this.y = y;
-        this.color = c;
-        this.width = w;
-        this.height = h;
-    }
-}
-
-class Board {
-    pieces = [];
-
-    constructor() {
-        this.createPieces();
-    }
-
-    createPieces() {
-        this.createPiece('red',   1, 0, 2, 2);
-        this.createPiece('green', 0, 0, 1, 2);
-        this.createPiece('green', 3, 0, 1, 2);
-
-        this.createPiece('green', 0, 2, 1, 2);
-        this.createPiece('blue',  1, 2, 2, 1);
-        this.createPiece('green', 3, 2, 1, 2);
-
-        this.createPiece('yellow',0, 4, 1, 1);
-        this.createPiece('yellow',1, 3, 1, 1);
-        this.createPiece('yellow',2, 3, 1, 1);
-        this.createPiece('yellow',3, 4, 1, 1);
-    }
-
-    createPiece(c, x, y, w, h) {
-        this.pieces.push(new Piece(c, x, y, w, h));
-    }
-}
+import { Piece, Board } from './wp';
 
 export class Game extends Engine {
 
@@ -59,6 +18,7 @@ export class Game extends Engine {
     transformControls;
     firstPersonControls;
 
+    wireframe;
     draggedBlock;
     hoveredBlock;
 
@@ -197,6 +157,31 @@ export class Game extends Engine {
         this.controls = this.transformControls;
     }
 
+    placeWireframe(b) {
+        const g = b.object.geometry;
+        var geo = new THREE.EdgesGeometry( g ); // or WireframeGeometry( geometry )
+        // var geo = new THREE.WireframeGeometry( g ); // or WireframeGeometry( geometry )
+        var mat = new THREE.LineBasicMaterial( { color: 0xffffff, linewidth: 2 } );
+        this.wireframe = new THREE.LineSegments( geo, mat );
+        // @TODO CLEAN
+        // @TODO CLEAN
+        // @TODO CLEAN
+        // @TODO CLEAN
+        this.wireframe.userData.piece = b.object.userData.piece;
+        this.resetBlockPosition(this.wireframe);
+        // @TODO CLEAN
+        // @TODO CLEAN
+        // @TODO CLEAN
+        // @TODO CLEAN
+
+        this.scene.add( this.wireframe );
+    }
+
+    removeWireframe() {
+        this.scene.remove( this.wireframe );
+        this.wireframe = null;
+    }
+
     onEvent(event, handler) {
         const controls = this.controls;
         if (controls && controls[handler]) {
@@ -230,6 +215,7 @@ export class Game extends Engine {
     }
     onMouseDown(event){
         if (this.hoveredBlock) {
+            this.placeWireframe(this.hoveredBlock);
             this.draggedBlock = this.hoveredBlock;
             this.draggedBlock.object.position.y = 3;
         }
@@ -237,6 +223,7 @@ export class Game extends Engine {
     }
     onMouseUp(event) {
         if (this.draggedBlock) {
+            this.removeWireframe();
             this.resetBlockPosition(this.draggedBlock.object);
             this.draggedBlock = null;
         }
