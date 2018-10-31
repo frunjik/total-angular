@@ -606,7 +606,7 @@ export function TransformControls( camera, domElement ) {
 
 	}
 
-	// TODO: depricate
+	// TODO: deprecate
 
 	this.getMode = function () {
 
