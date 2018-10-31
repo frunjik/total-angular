@@ -84,19 +84,6 @@ export class Game extends Engine {
         this.material('yellow', new THREE.MeshLambertMaterial({ color: 0xffff00 }));
     }
 
-    /// @CLEAN
-    /// @CLEAN
-    /// @CLEAN
-    /// @CLEAN
-    /// @CLEAN
-    /// @CLEAN
-
-    createBlockFromPiece(p) {
-        const b = this.createBlock(p.x, p.y, p.width, p.height, p.color);
-        b.userData.piece = p;
-        this.blocks.push(b);
-    }
-
     resetBlockPosition(b) {
         const p = b.userData.piece;
         this.setBlockPosition(b, p.x, p.y, p.width, p.height);
@@ -108,32 +95,20 @@ export class Game extends Engine {
         b.position.z = this.position.z + (this.s * (y + (h-1)/2));
     }
 
-    createBlock(x, y, w, h, color) {
-        const m = this.material(color);
-        const g = this.geometry(color);
-
-        const b = new THREE.Mesh(g, m);
-
-        b.position.x = this.position.x + (this.s * (x + (w-1)/2));
-        b.position.y = 0.5;
-        b.position.z = this.position.z + (this.s * (y + (h-1)/2));
-
-        b.name = color;
-
+    createBlock(p) {
+        const c = p.color;
+        const b = new THREE.Mesh(this.geometry(c), this.material(c));
+        b.name = c;
+        b.userData.piece = p;
+        this.resetBlockPosition(b);
         return b;
     }
 
     createBlocks() {
         this.createShapes();
         this.createMaterials();
-        this.board.pieces.forEach(p => this.createBlockFromPiece(p));
+        this.board.pieces.forEach(p => this.blocks.push(this.createBlock(p)));
     }
-
-    /// @CLEAN
-    /// @CLEAN
-    /// @CLEAN
-    /// @CLEAN
-    /// @CLEAN
 
     pick() {
         if (this.draggedBlock) return;
@@ -150,6 +125,9 @@ export class Game extends Engine {
 
         if (intersects.length) {
             this.hoveredBlock = intersects[0];
+        }
+        else {
+            this.hoveredBlock = null;
         }
     }
 
@@ -289,6 +267,7 @@ export class Game extends Engine {
     }
     onContextMenu(event) {
         this.onEvent(event, 'onContextMenu');
+        event.preventDefault();
     }
 }
  
