@@ -113,7 +113,7 @@ export class Game extends Engine {
         this.firstPersonControls = new FirstPersonControls(this.camera, this.canvas);
 
         this.editControls = new EditorControls(this.camera, this.canvas);
-        this.editControls.enabled = true;
+        this.editControls.enabled = false;
 
         this.transformControls = new TransformControls(this.camera, this.canvas);
         this.transformControls.size = 3;
@@ -268,7 +268,7 @@ export class Game extends Engine {
         this.onEvent(event, 'onMouseMove');
     }
     onMouseDown(event){
-        if (!this.ctrl && this.hoveredBlock) {
+        if (!this.ctrl && !this.draggedBlock && this.hoveredBlock) {
             this.placeWireframe(this.hoveredBlock);
             this.draggedBlock = this.hoveredBlock;
             this.draggedBlock.object.position.z = 1;
@@ -285,14 +285,14 @@ export class Game extends Engine {
     }
     onKeyDown(event) {
         if ('Control' === event.key && !this.ctrl) {
-            this.controls = this.editControls;
+            this.editControls.enabled = true;
             this.ctrl = true;
         }
         this.onEvent(event, 'onKeyDown');
     }
     onKeyUp(event) {
         if ('Control' === event.key && this.ctrl) {
-            this.controls = null;
+            this.editControls.enabled = false;
             this.ctrl = false;
         }
         this.onEvent(event, 'onKeyUp');
