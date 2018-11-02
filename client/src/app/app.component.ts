@@ -10,7 +10,7 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class AppComponent {
   
-  title = 'Workbench v0.0.1';
+  title = app.title;
   history = app.history;
 
   public constructor(
