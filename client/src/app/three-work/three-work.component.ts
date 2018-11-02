@@ -1,5 +1,8 @@
 import { Component, ElementRef, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { Game } from './game';
+import { run as runUnitTests } from '../js/tests/unittest_tests';
+import { run } from '../js/tests/unittest';
+import { WPTests, PieceTests } from './wp_tests';
 
 @Component({
   selector: 'app-three-work',
@@ -8,6 +11,9 @@ import { Game } from './game';
 })
 export class ThreeWorkComponent implements OnInit, AfterViewInit, OnDestroy {
   private game;
+
+  testResult;
+  testFailures;
 
   @ViewChild('scene') canvasElement: ElementRef;
   constructor() { }
@@ -21,14 +27,21 @@ export class ThreeWorkComponent implements OnInit, AfterViewInit, OnDestroy {
     this.game.init(this.canvasElement.nativeElement as HTMLCanvasElement);
   }
 
-// var vector = new THREE.Vector3(); // create once and reuse it!
-// ...
-// camera.getWorldDirection( vector );
-
-// (camera) direction
-// var direction = new Vector3( 0, 0, -1 ).applyQuaternion( mesh.quaternion );
   ngOnDestroy() {
     this.game.destroy();
     this.game = null;
   }
+
+  runTests() {
+// console.log('TEST', WPTests);
+
+    const results = [
+      // runUnitTests(),
+      run(WPTests),
+      run(PieceTests)
+    ];
+
+    this.testResult = results.map(r => r.summary()).join('\n');
+    this.testFailures = results.map(r => r.failures.join('\n')).join('\n');
+  }  
 }

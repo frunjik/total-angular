@@ -1,0 +1,1 @@
+2018-11-02 14:16:53 | {"errno":-4058,"code":"ENOENT","syscall":"open","path":"D:\\Projects\\web\\TA\\total-v0-webgl\\client\\app\\js\\tests\\unittest.ts"} url: http://127.0.0.1:8000/api/getfile?name=client/app/js/tests/unittest.ts source: response400() ip: 127.0.0.1

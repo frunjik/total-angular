@@ -113,6 +113,15 @@ export const app = {
                 'server/controllers/commands.js',
             ]
         },
+        { 
+            title: 'tests',
+            kind: 'other',
+            menu: false,
+            filenames: [
+                'client/src/app/js/tests/unittest.ts',
+                'client/src/app/js/tests/unittest_tests.ts',
+            ]
+        },
     ]
 }
 

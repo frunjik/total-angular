@@ -11,18 +11,69 @@ export class Piece {
         this.width = w;
         this.height = h;
     }
+
+    get left() {
+        return this.x;
+    }
+
+    get top() {
+        return this.y;
+    }
+
+    get right() {
+        return this.x + this.width;
+    }
+
+    get bottom() {
+        return this.y + this.height;
+    }
+
+    intersection(other) {
+        const result = {
+            x: 0,
+            y: 0,
+            width: 0,
+            height: 0,
+        };
+
+        if (!other) return result;
+
+        var leftX   = Math.max( this.left, other.left );
+        var rightX  = Math.min( this.right, other.right );
+        var topY    = Math.max( this.top, other.top );
+        var bottomY = Math.min( this.bottom, other.bottom );
+        
+        if ( leftX < rightX && topY < bottomY ) {
+          result.x = leftX;
+          result.y = topY;
+          result.width = rightX-leftX;
+          result.height = bottomY-topY;
+        } else {
+          // Rectangles do not overlap, or overlap has an area of zero (edge/corner overlap)
+        } 
+        
+        return result;
+    }
+
+    moveHorizontal(x) {
+        this.x += x;
+    }
+
+    moveVertical(y) {
+        this.y += y;
+    }
 }
 
 export class Board {
-    pieces = [];
+    pieces: Piece[] = [];
 
     constructor() {
         this.createPieces();
     }
 
     createPieces() {
-        this.createPiece('red',   1, 0, 2, 2);
         this.createPiece('green', 0, 0, 1, 2);
+        this.createPiece('red',   1, 0, 2, 2);
         this.createPiece('green', 3, 0, 1, 2);
 
         this.createPiece('green', 0, 2, 1, 2);
@@ -37,5 +88,67 @@ export class Board {
 
     createPiece(c, x, y, w, h) {
         this.pieces.push(new Piece(c, x, y, w, h));
+    }
+
+    overlaps(piece) {
+        return this.pieces.filter((p) => {
+            if (p === piece) return false;
+            const r = p.intersection(piece);
+            return r.width && r.height;
+        });
+    }
+
+    isInBounds(p) {
+        return (p.x >= 0) && (p.y >= 0) && (p.right < 5) && (p.bottom < 6);
+    }
+
+    isValidEmptyPosition(p) {
+        let result = true;
+        const inBounds = this.isInBounds(p);
+        if (!inBounds) {
+            result = false;
+        } else {
+            const others = this.overlaps(p)
+            result = others.length === 0
+        }
+        return result;
+    }
+
+    canMovePieceHorizontal(p, d) {
+        let result = true;
+        const orgX= p.x;
+        p.x += (d < 0 ? -1 : 1);
+        result = this.isValidEmptyPosition(p);
+        p.x = orgX;
+        return result;
+    }
+
+    canMovePieceVertical(p, d) {
+        let result = true;
+        const orgY = p.y;
+        p.y += (d < 0 ? -1 : 1);
+        result = this.isValidEmptyPosition(p);
+        p.y = orgY;
+        return result;
+    }
+
+    canMovePieceDown(p) {
+        return this.canMovePieceVertical(p, 1);
+        // let result = true;
+        // const orgY = p.y;
+        // p.y += 1;
+        // result = this.isValidEmptyPosition(p);
+        // p.y = orgY;
+        // return result;
+    }
+
+    canMovePieceUp(p) {
+        return this.canMovePieceVertical(p, -1);
+        // let result = true;
+        // const orgY = p.y;
+        // p.y -= 1;
+        // result = this.isValidEmptyPosition(p);
+        // p.y = orgY;
+        // return result;
     }
 }

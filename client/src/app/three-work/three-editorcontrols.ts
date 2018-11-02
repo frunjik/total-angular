@@ -197,6 +197,8 @@ export function EditorControls( object, domElement ) {
 	this.onMouseWheel = (event) => onMouseWheel(event);
 
 	function onMouseWheel( event ) {
+		// @JVH added
+		if (!scope.enabled) return;
 
 		event.preventDefault();
 

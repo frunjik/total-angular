@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import { Engine } from './engine';
 import { EditorControls } from './three-editorcontrols';
-import { TransformControls } from './three-transformcontrols';
 import { FirstPersonControls } from './three-firstpersoncontrols';
 import { Piece, Board } from './wp';
 
@@ -14,17 +13,20 @@ export class Game extends Engine {
     mouseVec;   // = new THREE.Vector2();
     mousePos;   // = new THREE.Vector2();
 
-    position = new THREE.Vector3(-15, -20, 0);
+    distance = 0;
+
     blocks = [];
     board = new Board();
     controls;
     editControls;
-    transformControls;
     firstPersonControls;
 
     light;
     directionalLight;
 
+    position = new THREE.Vector3(-15, -20, 0);
+    offset = new THREE.Vector3(0, 0, 0);
+    
     floor;
     wireframe;
     draggedBlock;
@@ -78,7 +80,6 @@ export class Game extends Engine {
 
     pick() {
         if (this.draggedBlock) return;
-
         this.raycaster.setFromCamera({x: this.mouseX, y: this.mouseY}, this.camera);
         var intersects = this.raycaster.intersectObject(this.scene, true);
         let f = intersects.find(i => i.object.name === 'floor');
@@ -88,7 +89,6 @@ export class Game extends Engine {
               intersects.splice(x, 1);
             }
         }
-
         if (intersects.length) {
             this.hoveredBlock = intersects[0];
         }
@@ -100,6 +100,7 @@ export class Game extends Engine {
     loop(now) {
         const delta = Math.max(now - this.lastNow, 1);
         this.lastNow = now;
+        this.distance = this.camera.position.distanceTo(this.floor.position);            
         if (this.controls && this.controls.update) {
             this.controls.update(delta);
         }
@@ -109,20 +110,10 @@ export class Game extends Engine {
 
     init(canvas) {
         super.init(canvas);
-
         this.firstPersonControls = new FirstPersonControls(this.camera, this.canvas);
-
         this.editControls = new EditorControls(this.camera, this.canvas);
         this.editControls.enabled = false;
-
-        this.transformControls = new TransformControls(this.camera, this.canvas);
-        this.transformControls.size = 3;
-        this.transformControls.attach(this.blocks[1]);
-        this.transformControls.enabled = true;
-        // this.scene.add(this.transformControls);
-        // this.controls = this.transformControls;
         this.controls = this.editControls;
-
         this.start();
     }
 
@@ -133,32 +124,23 @@ export class Game extends Engine {
         this.firstPersonControls = null;
         this.editControls.dispose();
         this.editControls = null;
-        this.scene.remove(this.transformControls);
-        this.transformControls.detach(this.blocks[1]);
-        this.transformControls.dispose();
-        this.transformControls = null;
         super.exit();
     }
 
     create() {
         super.create();
-
         this.createShapes();
         this.createMaterials();
-
         this.light = new THREE.AmbientLight( 0x404040 ); // soft white light
         this.scene.add(this.light);
-
         this.directionalLight = new THREE.DirectionalLight( 0xffffff, 0.7 );
         this.directionalLight.position.z = 0;
         this.directionalLight.position.y = 5;
         this.directionalLight.position.z = 5;
         this.scene.add(this.directionalLight);
-
         this.floor = new THREE.Mesh(this.geometry('cube'), this.material('floor'));
         this.floor.name = 'floor';  
         this.floor.position.z = -1;
-
         const s = 10;
         const w = 4;
         const h = 5;
@@ -166,15 +148,12 @@ export class Game extends Engine {
         this.floor.scale.y = s * h;  
         this.floor.scale.z = 1;  
         this.scene.add(this.floor);
-
         this.camera.position.x = 1;
         this.camera.position.y = -2;
         this.camera.position.z = 47;
         this.camera.lookAt(this.floor.position);
-
         this.mouseVec = new THREE.Vector3();
         this.mousePos = new THREE.Vector3();
-        
         this.raycaster = new THREE.Raycaster();
         this.createBlocks();
         this.blocks.forEach(b => this.scene.add(b));
@@ -185,6 +164,8 @@ export class Game extends Engine {
        this.blocks = [];
        this.raycaster = null;
        this.floor = null;
+       this.position = null;
+       this.offset = null;
        super.destroy();
     }
 
@@ -192,16 +173,17 @@ export class Game extends Engine {
         this.controls = this.editControls;
     }
     
-    enableTransformControls() {
-        // this.controls = this.firstPersonControls;
-        this.controls = this.transformControls;
-    }
-
     placeWireframe(b) {
         const g = b.object.geometry;
+
+        // var geo = new THREE.EdgesGeometry( g ); // or WireframeGeometry( geometry )
+        // var mat = new THREE.LineBasicMaterial( { color: 0xffffff, linewidth: 2, opacity: 0.5, transparent: true } );
+        // this.wireframe = new THREE.LineSegments( geo, mat );
+
         var geo = new THREE.EdgesGeometry( g ); // or WireframeGeometry( geometry )
-        var mat = new THREE.LineBasicMaterial( { color: 0xffffff, linewidth: 2 } );
-        this.wireframe = new THREE.LineSegments( geo, mat );
+        var mat = new THREE.MeshLambertMaterial( { color: b.object.material.color, opacity: 0.3, transparent: true } );
+        this.wireframe = new THREE.Mesh( g, mat );
+
         this.wireframe.userData.piece = b.object.userData.piece;
         this.resetBlockPosition(this.wireframe);
         this.scene.add( this.wireframe );
@@ -216,16 +198,12 @@ export class Game extends Engine {
         const vec = this.mouseVec;
         const pos = this.mousePos;
         const camera = this.camera;
-
         vec.set(
-            ( event.clientX / window.innerWidth ) * 2 - 1,
-            - ( event.clientY / window.innerHeight ) * 2 + 1,
+            this.mouseX,
+            this.mouseY,
             0.5 );
-
         vec.unproject( camera );
-
         vec.sub( camera.position ).normalize();
-
         var distance = - camera.position.z / vec.z;
         pos.copy( camera.position ).add( vec.multiplyScalar( distance ) );
     }
@@ -244,27 +222,46 @@ export class Game extends Engine {
         this.onEvent(event, 'onMouseLeave');
     }
     onMouseMove(event){
-        const mx = this.mouseX;
-        const my = this.mouseY;
-        // const mx = this.mousePos.x;
-        // const my = this.mousePos.y;
+        const mx = this.mousePos.x;
+        const my = this.mousePos.y;
+
+        this.mouseX = ( (event.clientX-this.bounds.x) / this.canvas.width ) * 2 - 1;
+        this.mouseY = -( (event.clientY-this.bounds.y) / this.canvas.height ) * 2 + 1;
 
         this.mousePos3D(event);
 
-        this.mouseX = ( (event.clientX-this.bounds.x) / this.canvas.width ) * 2 - 1;
-        this.mouseY = - ( (event.clientY-this.bounds.y) / this.canvas.height ) * 2 + 1;
-
         if (this.draggedBlock) {
-            const s = 40;
-            const dx = this.mouseX - mx;
-            const dy = this.mouseY - my;
-            // const dx = this.mousePos.x - mx;
-            // const dy = this.mousePos.y - my;
+
+            const s = 1;
+            const dx = this.mousePos.x - mx;
+            const dy = this.mousePos.y - my;
 
             this.draggedBlock.object.position.x += dx * s;
             this.draggedBlock.object.position.y += dy * s;
-        }
 
+            let o = this.offset;
+            o.copy(this.draggedBlock.object.position);
+            o.sub (this.wireframe.position);
+            o.divideScalar(this.s);
+
+            o = o.clone();
+            // o.normalize();
+            o.round();
+
+            const p = this.wireframe.userData.piece;
+            if(o.x || o.y) {
+                if (Math.abs(o.x) > Math.abs(o.y)) {
+                    if (this.board.canMovePieceHorizontal(p, o.x)) {
+                        p.moveHorizontal(o.x > 0 ? 1 : -1);
+                    }
+                } else {
+                    if (this.board.canMovePieceVertical(p, -o.y)) {
+                        p.moveVertical(o.y > 0 ? -1 : 1);
+                    }
+                }
+                this.resetBlockPosition(this.wireframe);
+            }
+        }
         this.onEvent(event, 'onMouseMove');
     }
     onMouseDown(event){
@@ -280,6 +277,7 @@ export class Game extends Engine {
             this.removeWireframe();
             this.resetBlockPosition(this.draggedBlock.object);
             this.draggedBlock = null;
+            this.offset.set(0, 0, 0);
         }
         this.onEvent(event, 'onMouseUp');
     }
