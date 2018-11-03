@@ -1,11 +1,9 @@
 import * as THREE from 'three';
 import { Engine } from './engine';
 import { EditorControls } from './three-editorcontrols';
-import { FirstPersonControls } from './three-firstpersoncontrols';
 import { Piece, Board } from './wp';
 
 export class Game extends Engine {
-
     s = 10;
     mouseX = 0;
     mouseY = 0;
@@ -19,7 +17,6 @@ export class Game extends Engine {
     board = new Board();
     controls;
     editControls;
-    firstPersonControls;
 
     light;
     directionalLight;
@@ -32,11 +29,9 @@ export class Game extends Engine {
     draggedBlock;
     hoveredBlock;
 
-    raycaster;
-
-    lastNow = 0;
-
     ctrl;
+    raycaster;
+    lastNow = 0;
 
     createShapes() {
         this.geometry('cube', new THREE.BoxGeometry(1, 1, 1));
@@ -90,7 +85,7 @@ export class Game extends Engine {
             }
         }
         if (intersects.length) {
-            this.hoveredBlock = intersects[0];
+            this.hoveredBlock = intersects[0].object;
         }
         else {
             this.hoveredBlock = null;
@@ -110,7 +105,6 @@ export class Game extends Engine {
 
     init(canvas) {
         super.init(canvas);
-        this.firstPersonControls = new FirstPersonControls(this.camera, this.canvas);
         this.editControls = new EditorControls(this.camera, this.canvas);
         this.editControls.enabled = false;
         this.controls = this.editControls;
@@ -120,8 +114,6 @@ export class Game extends Engine {
     exit() {
         this.stop();
         this.controls = null;
-        this.firstPersonControls.dispose();
-        this.firstPersonControls = null;
         this.editControls.dispose();
         this.editControls = null;
         super.exit();
@@ -174,17 +166,13 @@ export class Game extends Engine {
     }
     
     placeWireframe(b) {
-        const g = b.object.geometry;
-
-        // var geo = new THREE.EdgesGeometry( g ); // or WireframeGeometry( geometry )
-        // var mat = new THREE.LineBasicMaterial( { color: 0xffffff, linewidth: 2, opacity: 0.5, transparent: true } );
-        // this.wireframe = new THREE.LineSegments( geo, mat );
+        const g = b.geometry;
 
         var geo = new THREE.EdgesGeometry( g ); // or WireframeGeometry( geometry )
-        var mat = new THREE.MeshLambertMaterial( { color: b.object.material.color, opacity: 0.3, transparent: true } );
+        var mat = new THREE.MeshLambertMaterial( { color: b.material.color, opacity: 0.65, transparent: true } );
         this.wireframe = new THREE.Mesh( g, mat );
 
-        this.wireframe.userData.piece = b.object.userData.piece;
+        this.wireframe.userData.piece = b.userData.piece;
         this.resetBlockPosition(this.wireframe);
         this.scene.add( this.wireframe );
     }
@@ -236,11 +224,11 @@ export class Game extends Engine {
             const dx = this.mousePos.x - mx;
             const dy = this.mousePos.y - my;
 
-            this.draggedBlock.object.position.x += dx * s;
-            this.draggedBlock.object.position.y += dy * s;
+            this.draggedBlock.position.x += dx * s;
+            this.draggedBlock.position.y += dy * s;
 
             let o = this.offset;
-            o.copy(this.draggedBlock.object.position);
+            o.copy(this.draggedBlock.position);
             o.sub (this.wireframe.position);
             o.divideScalar(this.s);
 
@@ -268,14 +256,14 @@ export class Game extends Engine {
         if (!this.ctrl && !this.draggedBlock && this.hoveredBlock) {
             this.placeWireframe(this.hoveredBlock);
             this.draggedBlock = this.hoveredBlock;
-            this.draggedBlock.object.position.z = 1;
+            this.draggedBlock.position.z = 1;
         }
         this.onEvent(event, 'onMouseDown');
     }
     onMouseUp(event) {
         if (this.draggedBlock) {
             this.removeWireframe();
-            this.resetBlockPosition(this.draggedBlock.object);
+            this.resetBlockPosition(this.draggedBlock);
             this.draggedBlock = null;
             this.offset.set(0, 0, 0);
         }
