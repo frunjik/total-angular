@@ -114,41 +114,66 @@ export class Board {
         return result;
     }
 
+    movePieceHorizontal(p, d) {
+        p.x += (d < 0 ? -1 : 1);
+        
+console.log('PIECE.horz', p);
+        const others = this.overlaps(p);
+console.log('OTHERS', others);
+        others.forEach(o => this.movePieceHorizontal(o, d))
+    }
+
     canMovePieceHorizontal(p, d) {
         let result = true;
         const orgX= p.x;
         p.x += (d < 0 ? -1 : 1);
-        result = this.isValidEmptyPosition(p);
+        const inBounds = this.isInBounds(p);
+        if (inBounds) {
+            const others = this.overlaps(p);
+            if (others.length > 0) {
+                result = others.every(o => this.canMovePieceHorizontal(o, d))
+            }
+            else {
+                result = true;
+            }
+        } else {
+            result = false;
+        }
         p.x = orgX;
         return result;
+    }
+
+    movePieceVertical(p, d) {
+        p.y += (d < 0 ? -1 : 1);
+        const others = this.overlaps(p);
+        others.forEach(o => this.movePieceVertical(o, d))
     }
 
     canMovePieceVertical(p, d) {
         let result = true;
         const orgY = p.y;
         p.y += (d < 0 ? -1 : 1);
-        result = this.isValidEmptyPosition(p);
+        const inBounds = this.isInBounds(p);
+        if (inBounds) {
+            const others = this.overlaps(p);
+            if (others.length > 0) {
+                result = others.every(o => this.canMovePieceVertical(o, d))
+            }
+            else {
+                result = true;
+            }
+        } else {
+            result = false;
+        }
         p.y = orgY;
         return result;
     }
 
     canMovePieceDown(p) {
         return this.canMovePieceVertical(p, 1);
-        // let result = true;
-        // const orgY = p.y;
-        // p.y += 1;
-        // result = this.isValidEmptyPosition(p);
-        // p.y = orgY;
-        // return result;
     }
 
     canMovePieceUp(p) {
         return this.canMovePieceVertical(p, -1);
-        // let result = true;
-        // const orgY = p.y;
-        // p.y -= 1;
-        // result = this.isValidEmptyPosition(p);
-        // p.y = orgY;
-        // return result;
     }
 }

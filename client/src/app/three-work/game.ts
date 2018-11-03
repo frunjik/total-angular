@@ -234,20 +234,26 @@ export class Game extends Engine {
             o.divideScalar(this.s);
 
             o = o.clone();
-            // o.normalize();
             o.round();
 
             const p = this.wireframe.userData.piece;
+            const x = o.x;
+            const y = -o.y;
             if(o.x || o.y) {
                 if (Math.abs(o.x) > Math.abs(o.y)) {
-                    if (this.board.canMovePieceHorizontal(p, o.x)) {
-                        p.moveHorizontal(o.x > 0 ? 1 : -1);
+                    if (this.board.canMovePieceHorizontal(p, x)) {
+                        this.board.movePieceHorizontal(p, x);
                     }
                 } else {
-                    if (this.board.canMovePieceVertical(p, -o.y)) {
-                        p.moveVertical(o.y > 0 ? -1 : 1);
+                    if (this.board.canMovePieceVertical(p, y)) {
+                        this.board.movePieceVertical(p, y);
                     }
                 }
+                this.blocks.forEach(b => {
+                    if (b !== this.draggedBlock) {
+                        this.resetBlockPosition(b);
+                    }
+                });
                 this.resetBlockPosition(this.wireframe);
             }
         }
