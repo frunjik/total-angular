@@ -232,14 +232,14 @@ export class Game extends Engine {
             o.copy(this.draggedBlock.position);
             o.sub (this.wireframe.position);
             o.divideScalar(this.s);
-
             o = o.clone();
             o.round();
 
-            const p = this.wireframe.userData.piece;
             const x = o.x;
             const y = -o.y;
+
             if(o.x || o.y) {
+                const p = this.wireframe.userData.piece;
                 if (Math.abs(o.x) > Math.abs(o.y)) {
                     if (this.board.canMovePieceHorizontal(p, x)) {
                         this.board.movePieceHorizontal(p, x);

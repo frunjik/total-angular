@@ -28,6 +28,11 @@ export class Piece {
         return this.y + this.height;
     }
 
+    intersects(other) {
+        const r = this.intersection(other);
+        return r.width && r.height; 
+    }
+
     intersection(other) {
         const result = {
             x: 0,
@@ -62,6 +67,14 @@ export class Piece {
     moveVertical(y) {
         this.y += y;
     }
+
+    stepHorizontal(x) {
+        this.moveHorizontal(x < 0 ? -1 : 1);
+    }
+
+    stepVertical(y) {
+        this.moveVertical(y < 0 ? -1 : 1);
+    }
 }
 
 export class Board {
@@ -91,80 +104,35 @@ export class Board {
     }
 
     overlaps(piece) {
-        return this.pieces.filter((p) => {
-            if (p === piece) return false;
-            const r = p.intersection(piece);
-            return r.width && r.height;
-        });
+        return this.pieces.filter((p) => p !== piece && p.intersects(piece));
     }
 
     isInBounds(p) {
         return (p.x >= 0) && (p.y >= 0) && (p.right < 5) && (p.bottom < 6);
     }
 
-    isValidEmptyPosition(p) {
-        let result = true;
-        const inBounds = this.isInBounds(p);
-        if (!inBounds) {
-            result = false;
-        } else {
-            const others = this.overlaps(p)
-            result = others.length === 0
-        }
-        return result;
+    movePieceHorizontal(p, d) {
+        p.stepHorizontal(d);
+        this.overlaps(p).forEach(o => this.movePieceHorizontal(o, d));
     }
 
-    movePieceHorizontal(p, d) {
-        p.x += (d < 0 ? -1 : 1);
-        
-console.log('PIECE.horz', p);
-        const others = this.overlaps(p);
-console.log('OTHERS', others);
-        others.forEach(o => this.movePieceHorizontal(o, d))
+    movePieceVertical(p, d) {
+        p.stepVertical(d);
+        this.overlaps(p).forEach(o => this.movePieceVertical(o, d));
     }
 
     canMovePieceHorizontal(p, d) {
-        let result = true;
         const orgX= p.x;
-        p.x += (d < 0 ? -1 : 1);
-        const inBounds = this.isInBounds(p);
-        if (inBounds) {
-            const others = this.overlaps(p);
-            if (others.length > 0) {
-                result = others.every(o => this.canMovePieceHorizontal(o, d))
-            }
-            else {
-                result = true;
-            }
-        } else {
-            result = false;
-        }
+        p.stepHorizontal(d);
+        const result = this.isInBounds(p) && this.overlaps(p).every(o => this.canMovePieceHorizontal(o, d));
         p.x = orgX;
         return result;
     }
 
-    movePieceVertical(p, d) {
-        p.y += (d < 0 ? -1 : 1);
-        const others = this.overlaps(p);
-        others.forEach(o => this.movePieceVertical(o, d))
-    }
-
     canMovePieceVertical(p, d) {
-        let result = true;
         const orgY = p.y;
-        p.y += (d < 0 ? -1 : 1);
-        const inBounds = this.isInBounds(p);
-        if (inBounds) {
-            const others = this.overlaps(p);
-            if (others.length > 0) {
-                result = others.every(o => this.canMovePieceVertical(o, d))
-            }
-            else {
-                result = true;
-            }
-        } else {
-            result = false;
-        }
+        p.stepVertical(d);
+        const result = this.isInBounds(p) && this.overlaps(p).every(o => this.canMovePieceVertical(o, d));
         p.y = orgY;
         return result;
     }

@@ -39,9 +39,14 @@ export class WPTests extends TestCase {
         assert(others.length === 3, 'expected 3 others');
     }
 
-    testRedBlockCantMoveDown() {
+    testGreenBlockCantMoveDown() {
+        const green = this.board.pieces[0];
+        assert(!this.board.canMovePieceDown(green));
+    }
+
+    testRedBlockCanMoveDown() {
         const red = this.board.pieces[1];
-        assert(!this.board.canMovePieceDown(red));
+        assert(this.board.canMovePieceDown(red));
     }
 
     testYellowBlockCanMoveDown() {
