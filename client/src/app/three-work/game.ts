@@ -169,7 +169,8 @@ export class Game extends Engine {
         const g = b.geometry;
 
         var geo = new THREE.EdgesGeometry( g ); // or WireframeGeometry( geometry )
-        var mat = new THREE.MeshLambertMaterial( { color: b.material.color, opacity: 0.65, transparent: true } );
+        // var mat = new THREE.MeshLambertMaterial( { color: b.material.color, opacity: 0.65, transparent: true } );
+        var mat = new THREE.MeshLambertMaterial( { color: 0x112233, opacity: 0.65, transparent: true } );
         this.wireframe = new THREE.Mesh( g, mat );
 
         this.wireframe.userData.piece = b.userData.piece;
@@ -297,4 +298,3 @@ export class Game extends Engine {
         event.preventDefault();
     }
 }
- 
