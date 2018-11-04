@@ -140,9 +140,9 @@ export class Game extends Engine {
         this.floor.scale.y = s * h;  
         this.floor.scale.z = 1;  
         this.scene.add(this.floor);
-        this.camera.position.x = 1;
-        this.camera.position.y = -2;
-        this.camera.position.z = 47;
+        this.camera.position.x = 0.4504;
+        this.camera.position.y = -0.4345;
+        this.camera.position.z = 35.5261;
         this.camera.lookAt(this.floor.position);
         this.mouseVec = new THREE.Vector3();
         this.mousePos = new THREE.Vector3();
