@@ -36,7 +36,7 @@ export const app = {
             ]
         },
         page('home'),
-        nonMenuPage('shader-builder'),
+        page('shader-builder'),
         page('threejs'),
         page('three-work'),
         page('wp3'),

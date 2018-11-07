@@ -1,8 +1,18 @@
-.container {
+.col {
    display: flex;
-   height: 750px;
+   flex-direction: column;
+}
+
+.row {
+   display: flex;
+   flex-direction: row;
 }
 
 .item {
    flex: 1 0 0;
+}
+
+canvas {
+    width: 640px;
+    height: 320px;
 }

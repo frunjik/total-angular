@@ -1,24 +1,31 @@
-<p>
-  shader-builder works!
-</p>
+<div class="col">
 
-<div class="container">
     <div class="item">
-        <app-editor height="620px"></app-editor>
+        <canvas #scene>
+        </canvas>
+
+        ERRORS
+        
     </div>
-    <div class="item">
-        <app-editor></app-editor>
+
+    <mat-toolbar class="small-toolbar">
+        <span>
+            <button (click)="build()" mat-button>
+                BUILD
+            </button>
+        </span>
+    </mat-toolbar>
+
+    <div class="row" width="100%">
+        <div class="item">
+            <ngx-monaco-editor width="640px" [options]="editorOptions" [(ngModel)]="codeVS"></ngx-monaco-editor>
+        </div>
+        <div class="item">
+            <ngx-monaco-editor width="640px" [options]="editorOptions" [(ngModel)]="codeFS"></ngx-monaco-editor>
+        </div>
     </div>
+
+    <app-edit-this height="640px" width="100%" page="shader-builder" class="small">
+    </app-edit-this>
+       
 </div>
-
-<app-edit-this page="shader-builder"></app-edit-this>
-
-<mat-card>
-    <mat-card-title>
-    </mat-card-title>
-    <mat-card-content>
-    </mat-card-content>
-    <mat-card-footer>
-    </mat-card-footer>
-</mat-card>
-

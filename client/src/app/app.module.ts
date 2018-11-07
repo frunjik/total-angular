@@ -51,7 +51,7 @@ const routes: Routes = [
     // redirectTo: app.default,
     // pathMatch: 'full'
     // @TODO respect app.default
-    component: ThreeWorkComponent
+    component: ShaderBuilderComponent
   },
   { path: '**', component: PagenotfoundComponent }
 ];
