@@ -12,7 +12,15 @@
    flex: 1 0 0;
 }
 
+.label {
+   flex: 2 0 0;
+}
+
 canvas {
     width: 640px;
     height: 320px;
+}
+
+.small-toolbar {
+    height: 30px;
 }

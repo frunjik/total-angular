@@ -1,11 +1,55 @@
 <div class="col">
 
-    <div class="item">
+    <div class="row">
         <canvas #scene>
         </canvas>
 
-        ERRORS
-        
+        <!-- mat-card>
+        <div class="col">
+            <div class="row">
+                <div>
+                    ATTRIBUTES
+                </div>
+            </div>
+            <div class="row">
+                <div class="label">
+                A
+                </div>
+                <div>
+                1
+                </div>
+            </div>
+            <div class="row">
+                <div>
+                    UNIFORMS
+                </div>
+            </div>
+            <div class="row">
+                <div class="label">
+                A
+                </div>
+                <div>
+                1
+                </div>
+            </div>
+            <div class="row">
+                <div class="label">
+                A
+                </div>
+                <div>
+                1
+                </div>
+            </div>
+            <div class="row">
+                <div class="label">
+                A
+                </div>
+                <div>
+                1
+                </div>
+            </div>
+        </div>
+        </mat-card -->
     </div>
 
     <mat-toolbar class="small-toolbar">
@@ -14,6 +58,7 @@
                 BUILD
             </button>
         </span>
+        <mat-checkbox class="small" [(ngModel)]="animating">Animating</mat-checkbox>
     </mat-toolbar>
 
     <div class="row" width="100%">

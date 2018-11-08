@@ -87,6 +87,10 @@ export class ShaderBuilderComponent implements OnInit, AfterViewInit, OnDestroy 
 
   @ViewChild('scene') canvasElement: ElementRef;
 
+  raf;
+  lastTick = 0;
+  _animating = false;
+
   codeVS = `
 void main() {
     gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
@@ -129,6 +133,49 @@ void main() {
     console.log('MATERIAL', m);
     this.view.cube.material = m;
     this.view.render();
+  }
+
+  get animating() {
+      return this._animating;
+  }
+
+  loop(now = 0) {
+      const delta = Math.max(this.lastTick - now, 1);
+      this.view.cube.rotation.x += delta * 0.01;
+      this.view.cube.rotation.y += delta * 0.01;
+      this.lastTick = now;
+      
+      this.raf = null;
+      this.view.render();
+      this.raf = requestAnimationFrame(now => this.loop(now));
+  }
+
+  start() {
+      if (!this.raf) {
+          this.lastTick = 0;
+          this.loop();
+      }
+  }
+
+  stop() {
+      if (this.raf) {
+          cancelAnimationFrame(this.raf);
+          this.raf = null;
+      }
+  }
+
+  set animating(value) {
+
+console.log('animating', value);      
+      if (this._animating !== value) {
+        if (value) {
+            this.start();
+        }
+        else {
+            this.stop();
+        }
+        this._animating = value;          
+      }
   }
 
 }
