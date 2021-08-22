@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const rootpath = '../client/dist/';
+const rootpath = '../client/dist/client/';
 
 exports.install = function() {
 	F.file('*.*', serve);
@@ -13,7 +13,7 @@ function log(s) {
 function serve(req, res) {
 
 	let filename = rootpath + req.path.join('/');
-	
+
 	fs.exists(filename, function (exist) {
 		if(!exist) {
 			let msg = `File ${filename} not found`;
@@ -21,7 +21,7 @@ function serve(req, res) {
 			res.content(404, msg, 'text/plain');
 			return;
 		}
-	
+
 		log('SERVE: ' + filename);
 		fs.readFile(filename, function(err, data) {
 			if(err){
