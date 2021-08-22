@@ -1,3 +1,3 @@
-
+*.pid
 *.zip
 node_modules/
