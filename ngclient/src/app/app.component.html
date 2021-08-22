@@ -1,1 +1,17 @@
+<mat-toolbar color="primary">
+  <span>Total-angular</span>
+</mat-toolbar>
+
+<a mat-button href="http://localhost:8000/index.html">
+  reload
+</a>
+
+<button mat-button [routerLink]="['/home']">
+  home
+</button>
+
+<button mat-button [routerLink]="['/playground']">
+  playground
+</button>
+
 <router-outlet></router-outlet>

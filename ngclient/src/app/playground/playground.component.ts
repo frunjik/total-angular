@@ -15,7 +15,7 @@ export class PlaygroundComponent implements OnInit {
   filename = './README.md';
   filedata = '';
 
-  editorOptions = {theme: 'vs-dark', language: 'javascript'};
+  editorOptions = {theme: 'vs-light', language: 'javascript'};
 
   constructor(
     private fs: FsService
