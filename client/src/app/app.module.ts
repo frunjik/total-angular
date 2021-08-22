@@ -1,4 +1,4 @@
-import {CdkTableModule} from '@angular/cdk/table';
+import { CdkTableModule } from '@angular/cdk/table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MonacoEditorModule } from 'ngx-monaco-editor';
@@ -117,7 +117,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     MaterialModule,
     HttpClientModule
-    
+
   ],
   providers: [FsService],
   bootstrap: [AppComponent]
