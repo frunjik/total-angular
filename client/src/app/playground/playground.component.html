@@ -1,4 +1,3 @@
-
 <form class="example-form form-full-width">
   <mat-form-field class="example-full-width">
     <input class="input-field" name="filename" matInput placeholder="filename" [(ngModel)]="filename">
@@ -7,13 +6,10 @@
 
 <button (click)="getFile()" mat-button>Load</button>
 <button (click)="putFile()" mat-button>Save</button>
+<ngx-monaco-editor style="height:600px;" [options]="editorOptions" [(ngModel)]="filedata"></ngx-monaco-editor>
 
 <mat-card>
-    <mat-card-title>
-      {{filename}}
-    </mat-card-title>
     <mat-card-content>
-      <ngx-monaco-editor [options]="editorOptions" [(ngModel)]="filedata"></ngx-monaco-editor>
     </mat-card-content>
 </mat-card>
 

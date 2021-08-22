@@ -12,36 +12,36 @@ export interface File {
 })
 export class PlaygroundComponent implements OnInit {
 
-  filename: string = './README.md';
-  filedata: string = '';
+  filename = './README.md';
+  filedata = '';
 
-  editorOptions = {theme: 'vs-dark', language: 'javascript'};
+  editorOptions = {theme: 'vs-light', language: 'javascript'};
 
   constructor(
     private fs: FsService
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getFile();
   }
 
-  handleSuccess(file) {
+  handleSuccess(file: any): void {
     this.setFileData(file.data);
   }
 
-  handleFailure(error) {
+  handleFailure(error: Error): void {
     this.setFileData(error.message);
   }
 
-  setFileData(value) {
+  setFileData(value: string): void {
     this.filedata = value;
   }
 
-  setFilename(value) {
+  setFilename(value: string): void {
     this.filename = value;
   }
 
-  getFile() {
+  getFile(): void {
     this.fs.getFile(this.filename)
       .subscribe(
         file => this.handleSuccess(file),
@@ -49,7 +49,7 @@ export class PlaygroundComponent implements OnInit {
       );
   }
 
-  putFile() {
+  putFile(): void {
     this.fs.putFile(this.filename, this.filedata)
       .subscribe(
         success => {},
@@ -57,9 +57,8 @@ export class PlaygroundComponent implements OnInit {
       );
   }
 
-  selectFile(filename) {
+  selectFile(filename: string): void {
     this.setFilename(filename);
     this.getFile();
   }
-
 }
